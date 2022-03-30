@@ -82,7 +82,7 @@ public class ClienteController {
                          Model model, Authentication authentication,
                          HttpServletRequest request) {
 
-        //Validem si l'usuari s'ha autenticat
+        /*//Validem si l'usuari s'ha autenticat
         if (authentication != null) {
             logger.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
         }
@@ -91,8 +91,10 @@ public class ClienteController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             logger.info("Utilizando forma estática SecurityContextHolder.getContext().getAuthentication(): Hola usuario autenticado, tu username es: ".concat(auth.getName()));
-        }
+        }*/
 
+        //Validem fent servir el mètode hasRole
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (hasRole("ROLE_ADMIN")) {
             logger.info("Hola ".concat(auth.getName()).concat(" tienes acceso como administrador!"));
         } else if (hasRole("ROLE_USER")) {
