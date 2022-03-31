@@ -55,3 +55,11 @@ INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(3, 2, 6);
 INSERT INTO user (username, password, enabled) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1);
 INSERT INTO user (username, password, enabled) VALUES('admin', '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 1);
 
+
+INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Dia de seguiment', 500);
+INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Localització', 1000);
+INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Escombrat electrònic particular', 600);
+INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Escombrat electrònic empresa', 1200);
+INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i dietes', 100);
+INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i dietes fora CCAA', 300);
+
