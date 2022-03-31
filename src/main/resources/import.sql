@@ -54,3 +54,4 @@ INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(3, 2, 6);
 /* Entrada en la tabla users con las contraseñas encriptadas por Bcrypt */
 INSERT INTO user (username, password, enabled) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1);
 INSERT INTO user (username, password, enabled) VALUES('admin', '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 1);
+
