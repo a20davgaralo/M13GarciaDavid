@@ -6,10 +6,23 @@ import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-//Primer dato, nuestra clase entity y el tipo de dato de la llave primaria
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Interfície de tipus Dao (Data Acces Object) que gestiona certs aspectes de la classe Entity Cliente.
+ */
+
+//Primera dada del PagingAndSortingRepository és la classe que gestiona i la segona el tipus de dada de la seva clau primària
 public interface IClienteDao extends PagingAndSortingRepository<Cliente, Long> {
 
-    //Parámetro ?1 es el primer parámetro del método. El LEFT es porque si no lo hacemos, al abrir un cliente que no tiene facturas, nos dice que el cliente no existe en la base de datos
+    /**
+     * Mètode que realitza una cerca (fent servir la query anotada amb @Query)
+     * a la taula client fent un join amb factura per mostrar les factures d'un client
+     * Es fa un LEFT JOIN perquè si no es fa així, si un client no té factures no obtindríem cap resultat i no es
+     * mostrarà al llistat.
+     * @param id Està relacionat amb el ?1 de la query, el qual representa el primer paràmetre del mètode
+     * @return
+     */
     @Query("SELECT c FROM Cliente c LEFT JOIN FETCH c.facturas f WHERE c.id = ?1")
     public Cliente fetchByIdWithFacturas(Long id);
 }

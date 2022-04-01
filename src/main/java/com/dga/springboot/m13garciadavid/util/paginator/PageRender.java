@@ -5,6 +5,12 @@ import org.springframework.data.domain.Page;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe per gestionar la paginació de la vista de clients i com es mostren els resultats
+ * Implementa objectes de la classe PageItem
+ */
 public class PageRender<T> {
 
     private String url;

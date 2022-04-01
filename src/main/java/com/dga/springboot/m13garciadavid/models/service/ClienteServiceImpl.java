@@ -14,10 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe de tipus Service que implementa els mètodes de l'interfície IClienteService
+ * Aquest mètodes podran fer-se servir a la classe ClienteController per tractar amb les dades
+ */
 @Service
 public class ClienteServiceImpl implements IClienteService {
 
-    //Interfaces inyectadas
+    //Interfaces injectades
     @Autowired
     private IClienteDao clienteDao;
 
@@ -27,7 +33,7 @@ public class ClienteServiceImpl implements IClienteService {
     @Autowired
     private IFacturaDao facturaDao;
 
-    @Transactional(readOnly=true) //Solo de lectura, no va a escribir. Toma el contenido del método y lo envuelve en una transacción
+    @Transactional(readOnly=true)
     @Override
     public List<Cliente> findAll() {
         return (List<Cliente>) clienteDao.findAll();
@@ -39,7 +45,7 @@ public class ClienteServiceImpl implements IClienteService {
         return clienteDao.findAll(pageable);
     }
 
-    @Transactional //Sin el readonly ya que es de escritura
+    @Transactional
     @Override
     public void save(Cliente Cliente) {
         clienteDao.save(Cliente);
@@ -78,7 +84,7 @@ public class ClienteServiceImpl implements IClienteService {
     @Transactional(readOnly = true)
     @Override
     public Producto findProductoById(Long id) {
-        //findById Retorna un opcional, podemos manejar el resultado, por eso el orElse
+        //findById Retorna un opcional, podem gestionar el resultat, d'això el mètode orElse
         return productoDao.findById(id).orElse(null);
     }
 

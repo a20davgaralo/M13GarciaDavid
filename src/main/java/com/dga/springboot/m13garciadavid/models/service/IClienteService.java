@@ -8,6 +8,13 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Interfície que determina els mètodes que ha d'implementar la classe que la implementi
+ * Els mètodes estan proporcionats automàticament per Hibernate. Ens permeten fer les accions
+ * de tipus CRUD (Create, Read, Update, Delete)
+ */
 public interface IClienteService {
 
     //Metodo para listar
@@ -33,6 +40,7 @@ public interface IClienteService {
     public Factura findFacturaById(Long id);
 
     public void deleteFactura(Long id);
+
 
     public Factura fetchFacturabyIdfetchByIdWithClienteWithItemFacturaWithProdcuto(Long id);
 

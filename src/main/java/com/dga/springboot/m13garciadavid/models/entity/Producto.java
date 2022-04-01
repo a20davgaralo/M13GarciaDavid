@@ -4,10 +4,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe entity per gestionar la entitat i taula PRODUCTO fent servir Hibernate
+ */
 @Entity
 @Table(name = "PRODUCTO")
 public class Producto implements Serializable {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

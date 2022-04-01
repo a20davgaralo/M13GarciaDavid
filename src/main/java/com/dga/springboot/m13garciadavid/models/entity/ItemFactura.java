@@ -3,8 +3,13 @@ package com.dga.springboot.m13garciadavid.models.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe entity per gestionar la entitat i taula FACTURA fent servir Hibernate
+ */
 @Entity
-@Table(name="facturas_items")
+@Table(name="FACTURAS_ITEMS")
 public class ItemFactura implements Serializable {
 
     @Id
@@ -14,7 +19,7 @@ public class ItemFactura implements Serializable {
     private Integer cantidad;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "producto_id") //Se puede omitir. Tomará el nombre del atributo producto_id en la tabla Factura
+    @JoinColumn(name = "producto_id")
     private Producto producto;
 
     public Long getId() {

@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe entity per gestionar la entitat i taula FACTURA fent servir Hibernate
+ */
 @Entity
 @Table(name="FACTURA")
 public class Factura implements Serializable {

@@ -17,8 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.util.Map;
 
-//Se debe anotar con component para que se pueda linkar a una vista. Y en vez que se vea la factura, se muestre por pdf
-//Spring sabe como pasar la vista (html, xml, pdf, excel...) es por el parámetro Format
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe per gesionar l'exportació d'una factura a un arxiu PDF.
+ * Anotem amb component perque es pugui veure a la vista "factura/ver"
+ * A la vista afegim el format en el que s'exporta (línea 14), en aquest cas pdf
+ * D'aquesta manera, la factura no es mostrarà en format HTML, sino en PDF
+ */
 @Component("factura/ver")
 public class FacturaPdfView extends AbstractPdfView {
 
@@ -27,15 +33,16 @@ public class FacturaPdfView extends AbstractPdfView {
                                     PdfWriter writer, HttpServletRequest request,
                                     HttpServletResponse response) throws Exception {
 
-        //Hacemos un cast porque el model devuelve un objeto
+
+        //Fem cast perque el mètode model torna un objecte
         Factura factura = (Factura) model.get("factura");
 
-        //Creamos un vista igual que la que muestra html (factura/ver)
+        //Creem una vista amb la mateixa estructura que es mostra a l'html (factura/ver)
 
         PdfPTable tabla = new PdfPTable(1);
         tabla.setSpacingAfter(20);
 
-        //Para poder modificar los atributos de las celdas, creamos objetos PdfPCell
+        //Per poder modificar els atributs de les cel·les, creem objectes de la classe PdfPCell
         PdfPCell cell = null;
 
         cell = new PdfPCell(new Phrase("Datos del cliente"));
@@ -58,7 +65,7 @@ public class FacturaPdfView extends AbstractPdfView {
         tabla2.addCell("Descripción: " + factura.getDescripcion());
         tabla2.addCell("Fecha: " + factura.getCreateAt());
 
-        //Guardamos las tablas a través de Document
+        //Guardem les taules creades a través de Document
         document.add(tabla);
         document.add(tabla2);
 
@@ -69,7 +76,7 @@ public class FacturaPdfView extends AbstractPdfView {
         tabla3.addCell("Cantidad");
         tabla3.addCell("Total");
 
-        //Añadir los elementos de la factura
+        //Afegir els elements de la factura
         for(ItemFactura item: factura.getItems()) {
             tabla3.addCell(item.getProducto().getNombre());
             tabla3.addCell(item.getProducto().getPrecio().toString());
@@ -80,20 +87,18 @@ public class FacturaPdfView extends AbstractPdfView {
             tabla3.addCell(item.calcularImporte().toString());
         }
 
-        //Footer. Para ello creamos una celda
+        //Footer. Creem una cel·la per ella
         cell = new PdfPCell(new Phrase("Total"));
         //Numero columnas
         cell.setColspan(3);
-        //Alinear texto a la derecha
+        //Alinear text a la dreta
         cell.setHorizontalAlignment(PdfCell.ALIGN_RIGHT);
 
-        //Añadir a la tabla3
+        //Afegir a la tabla3
         tabla3.addCell(cell);
         tabla3.addCell(factura.getTotal().toString());
 
         document.add(tabla3);
-
-
 
     }
 }

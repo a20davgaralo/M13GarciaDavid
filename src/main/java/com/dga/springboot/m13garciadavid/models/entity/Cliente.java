@@ -10,18 +10,17 @@ import java.util.List;
 /**
  * Author: David García Alonso
  * Versió: 1.0
- * Classe entity per gestionar la entitat i taula clients fent servir Hibernate
+ * Classe entity per gestionar la entitat i taula CLIENTE fent servir Hibernate
  */
 @Entity
 @Table(name="CLIENTE")
 public class Cliente implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Auto-increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name="nombre_cliente", ) //Con esto podemos cambiar el nombre en la tabla a un campo. También nos permite modificar sus configuración (NOT NULL, DEFAULT, VARCHAR(20), etc)
-    @NotEmpty //Requerido
+    @NotEmpty
     private String nombre;
     @NotEmpty
     private String apellido;
@@ -31,7 +30,7 @@ public class Cliente implements Serializable {
 
     private String telefono;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL) //MappedBy crea la llave foranea cliente_id en la tabla facturas. Determina la relación 1/N con factura. Cascade es como la constraint de MySQL
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Factura> facturas;
 
     public Cliente() {

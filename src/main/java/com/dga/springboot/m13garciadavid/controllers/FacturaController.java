@@ -20,9 +20,14 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Controlador per tota la part de la gestio de les factures
+ */
 
-//Anotamos la clase con @Secured("ROLE_ADMIN") para que toda la clase se pueda acceder siendo ADMIN
-@Secured("ROLE_ADMIN")
+
+@Secured("ROLE_ADMIN") //Anotem la classe amb @Secured("ROLE_ADMIN") perque aquesta classe només es pot fer servir sent rol ADMIN
 @Controller
 @RequestMapping("/factura")
 @SessionAttributes("factura")
@@ -31,20 +36,24 @@ public class  FacturaController {
     @Autowired
     private IClienteService clienteService;
 
-    //Para debugear en el log
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    //Implementar el ver factura
+    /**
+     * Implementa poder veure una factura passant un id de factura determinat
+     * @param id
+     * @param model
+     * @param flash
+     * @return
+     */
     @GetMapping("/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id,
                       Model model,
                       RedirectAttributes flash) {
 
-        //Forma antigua de hacerlo, sin el método JOIN FETCH implementado en IFacturaDao
-        //Factura factura = clienteService.findFacturaById(id);
         Factura factura = clienteService.fetchFacturabyIdfetchByIdWithClienteWithItemFacturaWithProdcuto(id);
 
-        //Si el parámetro id que pasamos en url no existe, lo indicamos
+        //Primer es comprova si el paràmetre factura (id) que pasem per la url existeix, sino, redirigim a la vista principal
         if (factura == null) {
             flash.addFlashAttribute("error", "La factura no existe en la base de datos");
             return "redirect:/listar";
@@ -56,33 +65,55 @@ public class  FacturaController {
         return "factura/ver";
     }
 
+    /**
+     * Gestió del formulari per crear una factura. Passem un id de client per la url
+     * @param clienteId
+     * @param model
+     * @param flash
+     * @return
+     */
     @GetMapping("/form/{clienteId}")
     public String crear(@PathVariable(value="clienteId") Long clienteId, Map<String, Object> model, RedirectAttributes flash) {
 
         Cliente cliente = clienteService.findOne(clienteId);
 
+        //Primer es comprova si el paràmetre de client que pasem per la url existeix, sino, redirigim a la vista principal
         if(cliente == null) {
             flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
             return "redirect:/listar";
         }
 
         Factura factura = new Factura();
-        //Asginamos la factura a un cliente
+        //Assignem la factura a un client
         factura.setCliente(cliente);
 
         model.put("factura", factura);
         model.put("titulo", "Crear factura");
 
-
         return "factura/form";
     }
 
-    //Suprime cargar vista, retorna el resultado en json y lo guarda en el ResponseBody
+    /**
+     * Suprimeix carregar la vista, retorna el resultat en json i el guarda en el ResponseBody
+     * @param term
+     * @return
+     */
     @GetMapping(value = "/cargar-productos/{term}", produces = { "application/json" })
     public @ResponseBody List<Producto> cargarProductos(@PathVariable String term) {
         return clienteService.findByNombre(term);
     }
 
+    /**
+     * Formulari per guardar la factura
+     * @param factura
+     * @param result
+     * @param model
+     * @param itemId
+     * @param cantidad
+     * @param flash
+     * @param status
+     * @return
+     */
     @PostMapping("/form")
     public String guardar(@Valid Factura factura,
                           BindingResult result,
@@ -92,13 +123,13 @@ public class  FacturaController {
                           RedirectAttributes flash,
                           SessionStatus status) {
 
-        //Valida los datos y comprueba errores
+        //Valida les dades i comprova errors
         if(result.hasErrors()) {
             model.addAttribute("titulo", "Crear Factura");
             return "factura/form";
         }
 
-        //Comprueba si el id es null o los elementos
+        //Comprova si l'id es null o no hi han elements
         if(itemId == null || itemId.length == 0) {
             model.addAttribute("titulo", "Crear Factura");
             model.addAttribute("error", "Error: La factura debe contener alguna línea");
@@ -106,34 +137,40 @@ public class  FacturaController {
         }
 
         for(int i = 0; i < itemId.length; i++) {
-            //Obtenemos producto de cada línea de factura
+            //Obtenim el producte de cada línea de factura
             Producto producto = clienteService.findProductoById(itemId[i]);
 
-            //Pasamos valores al item de la factura
+            //Passem valors a l'item de la factura
             ItemFactura linea = new ItemFactura();
             linea.setCantidad(cantidad[i]);
             linea.setProducto(producto);
 
-            //Agregamos la línea de factura a la factura
+            //Afegim la línea de factura a la factura
             factura.addItemFactura(linea);
 
-            //Para hacer debug y mostrar en consola valor de id y cantidad
+            //Amb això podem debuggar l'aplicació i mostar per consola el valor de l'id i la quantitat
             log.info("ID: " + itemId[i].toString() + ", cantidad: " + cantidad[i].toString());
         }
 
-        //Guardamos factura en BBDD
+        //Guardem factura en BBDD
         clienteService.saveFactura(factura);
 
-        //Finalizamos el proceso SessionAttribute de la factura
+        //Finalitzem procés SessionAttribute de la factura
         status.setComplete();
 
-        //Pasamos mensaje flash
+        //Passem missatge flash indicant que la factura s'ha creat
         flash.addFlashAttribute("succes", "Factura creada con éxito");
 
-        //Redirigimos al estado del cliente
+        //Redirigim a l'estat del client
         return "redirect:/ver/" + factura.getCliente().getId();
     }
 
+    /**
+     * Gestió de l'eliminació de la factura
+     * @param id
+     * @param flash
+     * @return
+     */
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
