@@ -1,5 +1,7 @@
 package com.dga.springboot.m13garciadavid.models.entity;
 
+import com.dga.springboot.m13garciadavid.validation.TelefonRegex;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -28,6 +30,8 @@ public class Cliente implements Serializable {
     @Email
     private String email;
 
+    @NotEmpty
+    @TelefonRegex
     private String telefono;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
