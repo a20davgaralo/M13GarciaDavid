@@ -63,3 +63,5 @@ INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Escombrat elect
 INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i dietes', 100);
 INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i dietes fora CCAA', 300);
 
+
+INSERT INTO cliente (apellido, email, nombre, telefono) VALUES ('Garcia', 'david.garcia@gmail.com', 'David', '6543216');
