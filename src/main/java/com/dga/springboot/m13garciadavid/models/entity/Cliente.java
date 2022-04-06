@@ -1,5 +1,6 @@
 package com.dga.springboot.m13garciadavid.models.entity;
 
+import com.dga.springboot.m13garciadavid.validation.IDFiscalRegex;
 import com.dga.springboot.m13garciadavid.validation.TelefonRegex;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Cliente implements Serializable {
     private Long id;
 
     @NotEmpty
+    @IDFiscalRegex
     private String identificacionFiscal;
 
     @NotEmpty
@@ -84,6 +86,14 @@ public class Cliente implements Serializable {
 
     public void setTelefono(String telefon) {
         this.telefono = telefon;
+    }
+
+    public String getIdentificacionFiscal() {
+        return identificacionFiscal;
+    }
+
+    public void setIdentificacionFiscal(String identificacionFiscal) {
+        this.identificacionFiscal = identificacionFiscal;
     }
 
     public List<Factura> getFacturas() {
