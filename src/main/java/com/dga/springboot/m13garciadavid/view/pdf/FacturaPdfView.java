@@ -4,6 +4,8 @@ package com.dga.springboot.m13garciadavid.view.pdf;
 import com.dga.springboot.m13garciadavid.models.entity.Factura;
 import com.dga.springboot.m13garciadavid.models.entity.ItemFactura;
 import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Image;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfPCell;
@@ -39,7 +41,16 @@ public class FacturaPdfView extends AbstractPdfView {
 
         //Creem una vista amb la mateixa estructura que es mostra a l'html (factura/ver)
 
+        //Afegim imatge al document
+        Image logo = Image.getInstance("src/main/resources/static/images/logoPetit.png");
+        logo.scalePercent(20);
+        logo.setAlignment(Element.ALIGN_CENTER);
+        //logo.setSpacingAfter(40);
+        document.add(logo);
+
+        //Creem la primera taula
         PdfPTable tabla = new PdfPTable(1);
+        tabla.setSpacingBefore(40);
         tabla.setSpacingAfter(20);
 
         //Per poder modificar els atributs de les cel·les, creem objectes de la classe PdfPCell
