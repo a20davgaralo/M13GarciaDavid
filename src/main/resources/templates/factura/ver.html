@@ -17,6 +17,7 @@
                 <ul class="list-group my-2">
                     <li class="list-group-item list-group-item-primary" th:text="'Datos del cliente'"></li>
                     <li class="list-group-item" th:text="${factura.cliente}"></li>
+                    <li class="list-group-item" th:text="${factura.cliente.identificacionFiscal}"></li>
                     <li class="list-group-item" th:text="${factura.cliente.email}"></li>
                 </ul>
 
@@ -47,7 +48,7 @@
                     </tbody>
                 </table>
 
-                <h5 class="float-lg-end">Total factura <span th:text="${factura.total}" class="badge bg-secondary"></span></h5>
+                <h5 class="float-lg-end">Total factura <span th:text="${factura.total} + '€'" class="badge bg-secondary"></span></h5>
 
                 <div class="card border-info mb-4" style="max-width: 20rem;">
                     <div class="card-header">Observaciones</div>

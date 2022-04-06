@@ -51,6 +51,7 @@ public class FacturaPdfView extends AbstractPdfView {
         tabla.addCell(cell);
 
         tabla.addCell(factura.getCliente().getNombre() + " " + factura.getCliente().getApellido());
+        tabla.addCell(factura.getCliente().getIdentificacionFiscal());
         tabla.addCell(factura.getCliente().getEmail());
 
         PdfPTable tabla2 = new PdfPTable(1);
@@ -96,7 +97,7 @@ public class FacturaPdfView extends AbstractPdfView {
 
         //Afegir a la tabla3
         tabla3.addCell(cell);
-        tabla3.addCell(factura.getTotal().toString());
+        tabla3.addCell(factura.getTotal().toString().concat("€"));
 
         document.add(tabla3);
 

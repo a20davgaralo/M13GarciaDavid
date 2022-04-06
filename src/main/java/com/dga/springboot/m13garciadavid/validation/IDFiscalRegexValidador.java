@@ -1,8 +1,5 @@
 package com.dga.springboot.m13garciadavid.validation;
 
-import com.dga.springboot.m13garciadavid.models.entity.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
