@@ -23,6 +23,9 @@ public class Cliente implements Serializable {
     private Long id;
 
     @NotEmpty
+    private String identificacionFiscal;
+
+    @NotEmpty
     private String nombre;
     @NotEmpty
     private String apellido;
