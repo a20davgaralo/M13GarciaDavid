@@ -3,10 +3,9 @@ package com.dga.springboot.m13garciadavid.view.pdf;
 
 import com.dga.springboot.m13garciadavid.models.entity.Factura;
 import com.dga.springboot.m13garciadavid.models.entity.ItemFactura;
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
 import com.lowagie.text.Image;
-import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
@@ -30,6 +29,11 @@ import java.util.Map;
 @Component("factura/ver")
 public class FacturaPdfView extends AbstractPdfView {
 
+    private static Font tituloF = new Font(Font.BOLD, 18, Font.TIMES_ROMAN);
+    private static Font peque = new Font(Font.ITALIC, 10, Font.TIMES_ROMAN);
+    private static Font normal = new Font(Font.TIMES_ROMAN, 12);
+    private static Font tituloP = new Font(Font.BOLD, 13, Font.TIMES_ROMAN);
+
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document,
                                     PdfWriter writer, HttpServletRequest request,
@@ -41,12 +45,27 @@ public class FacturaPdfView extends AbstractPdfView {
 
         //Creem una vista amb la mateixa estructura que es mostra a l'html (factura/ver)
 
+
         //Afegim imatge al document
         Image logo = Image.getInstance("src/main/resources/static/images/logoPetit.png");
         logo.scalePercent(20);
         logo.setAlignment(Element.ALIGN_CENTER);
-        //logo.setSpacingAfter(40);
+        logo.setSpacingAfter(40);
         document.add(logo);
+
+        //Títol
+        Paragraph titulo = new Paragraph("FACTURA", tituloF);
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        titulo.setSpacingAfter(20);
+        document.add(titulo);
+
+        Paragraph datosFis = new Paragraph();
+        datosFis.add(new Paragraph("NIF - 49098111C", peque));
+        datosFis.add(new Paragraph("C/ Guillem Tell, 24", peque));
+        datosFis.add(new Paragraph("08006 - Barcelona", peque));
+        datosFis.setAlignment(Element.ALIGN_RIGHT);
+        datosFis.setIndentationRight(20);
+        document.add(datosFis);
 
         //Creem la primera taula
         PdfPTable tabla = new PdfPTable(1);
@@ -83,10 +102,10 @@ public class FacturaPdfView extends AbstractPdfView {
 
         PdfPTable tabla3 = new PdfPTable(4);
         tabla3.setWidths(new float[] {3.5f, 1, 1, 1});
-        tabla3.addCell("Producto");
-        tabla3.addCell("Precio");
-        tabla3.addCell("Cantidad");
-        tabla3.addCell("Total");
+        tabla3.addCell(new Paragraph("Producto", tituloP));
+        tabla3.addCell(new Paragraph("Precio", tituloP));
+        tabla3.addCell(new Paragraph("Cantidad", tituloP));
+        tabla3.addCell(new Paragraph("Total", tituloP));
 
         //Afegir els elements de la factura
         for(ItemFactura item: factura.getItems()) {
@@ -111,6 +130,21 @@ public class FacturaPdfView extends AbstractPdfView {
         tabla3.addCell(factura.getTotal().toString().concat("€"));
 
         document.add(tabla3);
+
+        Paragraph pago = new Paragraph();
+        pago.setSpacingBefore(40);
+        pago.add(new Paragraph("Puede hacer efectivo el ingreso del importe por transferencia al número de cuenta siguiente:", normal));
+        pago.add(new Paragraph("IBAN: ES49 XXXX XXXX XXXX XXXX", normal));
+        pago.setAlignment(Element.ALIGN_LEFT);
+        pago.setIndentationLeft(40);
+        document.add(pago);
+
+        Paragraph firma = new Paragraph();
+        firma.setSpacingBefore(40);
+        firma.add(new Paragraph("Firmado", peque));
+        firma.setAlignment(Element.ALIGN_RIGHT);
+        firma.setIndentationRight(40);
+        document.add(firma);
 
     }
 }
