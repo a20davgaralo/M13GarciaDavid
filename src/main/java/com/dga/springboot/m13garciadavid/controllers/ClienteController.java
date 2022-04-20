@@ -51,6 +51,11 @@ public class ClienteController {
     @Autowired
     private IUploadFileService uploadFileService;
 
+    /**
+     * Gestió de la pujada d'arxius
+     * @param filename
+     * @return
+     */
     @GetMapping(value = "/uploads/{filename:.+}")
     public ResponseEntity<Resource> verInforme(@PathVariable String filename) {
 
@@ -59,7 +64,6 @@ public class ClienteController {
         try {
             recurso = uploadFileService.load(filename);
         } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -220,17 +224,16 @@ public class ClienteController {
 
         if (!informe.isEmpty()) {
 
-            if (cliente.getId() != null && cliente.getId() > 0 && cliente.getInforme() != null
+            /*if (cliente.getId() != null && cliente.getId() > 0 && cliente.getInforme() != null
                     && cliente.getInforme().length() > 0) {
 
                 uploadFileService.delete(cliente.getInforme());
-            }
+            }*/
 
             String uniqueFilename = null;
             try {
                 uniqueFilename = uploadFileService.copy(informe);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
