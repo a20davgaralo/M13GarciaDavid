@@ -2,13 +2,17 @@ package com.dga.springboot.m13garciadavid.controllers;
 
 import com.dga.springboot.m13garciadavid.models.entity.Cliente;
 import com.dga.springboot.m13garciadavid.models.service.IClienteService;
+import com.dga.springboot.m13garciadavid.models.service.IUploadFileService;
 import com.dga.springboot.m13garciadavid.util.paginator.PageRender;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +29,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -41,6 +47,26 @@ public class ClienteController {
 
     @Autowired
     private IClienteService clienteService;
+
+    @Autowired
+    private IUploadFileService uploadFileService;
+
+    @GetMapping(value = "/uploads/{filename:.+}")
+    public ResponseEntity<Resource> verInforme(@PathVariable String filename) {
+
+        Resource recurso = null;
+
+        try {
+            recurso = uploadFileService.load(filename);
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+                .body(recurso);
+    }
 
     /**
      * Vista principal
@@ -179,17 +205,38 @@ public class ClienteController {
      * @param cliente
      * @param result
      * @param model
-     * @param foto
+     * @param informe
      * @param flash
      * @param status
      * @return
      */
     @Secured("ROLE_ADMIN")
     @PostMapping("/form")
-    public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+    public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("file") MultipartFile informe, RedirectAttributes flash, SessionStatus status) {
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Formulario de Cliente");
             return "form";
+        }
+
+        if (!informe.isEmpty()) {
+
+            if (cliente.getId() != null && cliente.getId() > 0 && cliente.getInforme() != null
+                    && cliente.getInforme().length() > 0) {
+
+                uploadFileService.delete(cliente.getInforme());
+            }
+
+            String uniqueFilename = null;
+            try {
+                uniqueFilename = uploadFileService.copy(informe);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFilename + "'");
+
+            cliente.setInforme(uniqueFilename);
         }
 
         String mensajeFlash = (cliente.getId() != null) ? "Cliente editado con éxito!" : "Cliente creado con éxito";

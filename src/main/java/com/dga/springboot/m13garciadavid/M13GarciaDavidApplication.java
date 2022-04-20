@@ -1,5 +1,6 @@
 package com.dga.springboot.m13garciadavid;
 
+import com.dga.springboot.m13garciadavid.models.service.IUploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +18,9 @@ public class M13GarciaDavidApplication implements CommandLineRunner {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    IUploadFileService uploadFileService;
+
     public static void main(String[] args) {
         SpringApplication.run(M13GarciaDavidApplication.class, args);
     }
@@ -32,5 +36,8 @@ public class M13GarciaDavidApplication implements CommandLineRunner {
             String bcryptPassword = passwordEncoder.encode(password);
             System.out.println(bcryptPassword);
         }
+
+        uploadFileService.deleteAll();
+        uploadFileService.init();
     }
 }
