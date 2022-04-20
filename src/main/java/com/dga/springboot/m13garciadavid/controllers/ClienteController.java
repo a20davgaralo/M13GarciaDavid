@@ -165,7 +165,7 @@ public class ClienteController {
                 return "redirect:/listar";
             }
         } else {
-            flash.addFlashAttribute("error", "El ID del cliente no puede ser cero");
+            flash.addFlashAttribute("error", "El ID del cliente no puede o");
             return "redirect:/listar";
         }
         model.put("cliente", cliente);
