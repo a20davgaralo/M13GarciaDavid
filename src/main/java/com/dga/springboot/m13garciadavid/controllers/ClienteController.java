@@ -271,6 +271,12 @@ public class ClienteController {
         return "redirect:/listar";
     }
 
+    /**
+     * Eliminar un informe en pdf pujat per un client
+     * @param id
+     * @param flash
+     * @return
+     */
     @GetMapping("/eliminarInforme/{id}")
     public String eliminarInforme(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
