@@ -43,6 +43,15 @@ public class ClienteController {
     private IClienteService clienteService;
 
     /**
+     * Vista principal
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String homePage(Model model) {
+
+        model.addAttribute("titulo", "Página principal de la gestión del despacho");
+        return "home";
+    }
+    /**
      * Per mostrar les dades d'un client determinat
      *
      * @param id
@@ -77,7 +86,8 @@ public class ClienteController {
      * @param request
      * @return
      */
-    @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page,
                          Model model, Authentication authentication,
                          HttpServletRequest request) {
