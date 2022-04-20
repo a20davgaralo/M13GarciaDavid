@@ -46,4 +46,6 @@ public interface IClienteService {
 
     public Cliente fetchByIdWithFacturas(Long id);
 
+    public void borraInforme(Long id);
+
 }

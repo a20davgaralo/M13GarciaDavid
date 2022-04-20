@@ -2,6 +2,7 @@ package com.dga.springboot.m13garciadavid.models.dao;
 
 
 import com.dga.springboot.m13garciadavid.models.entity.Cliente;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -25,4 +26,8 @@ public interface IClienteDao extends PagingAndSortingRepository<Cliente, Long> {
      */
     @Query("SELECT c FROM Cliente c LEFT JOIN FETCH c.facturas f WHERE c.id = ?1")
     public Cliente fetchByIdWithFacturas(Long id);
+
+    @Modifying
+    @Query("UPDATE Cliente c SET c.informe = '' WHERE c.id =?1")
+    public void setInformeVoid(Long id);
 }

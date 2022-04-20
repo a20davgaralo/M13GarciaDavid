@@ -224,11 +224,11 @@ public class ClienteController {
 
         if (!informe.isEmpty()) {
 
-            /*if (cliente.getId() != null && cliente.getId() > 0 && cliente.getInforme() != null
+            if (cliente.getId() != null && cliente.getId() > 0 && cliente.getInforme() != null
                     && cliente.getInforme().length() > 0) {
 
                 uploadFileService.delete(cliente.getInforme());
-            }*/
+            }
 
             String uniqueFilename = null;
             try {
@@ -262,10 +262,27 @@ public class ClienteController {
             Cliente cliente = clienteService.findOne(id);
             clienteService.eliminar(id);
             flash.addFlashAttribute("success", "Cliente eliminado con éxito!");
+
+            if (uploadFileService.delete(cliente.getInforme())) {
+                flash.addFlashAttribute("info", "Informe " + cliente.getInforme() + " eliminado con exito!");
+            }
         }
+
         return "redirect:/listar";
     }
 
+    @GetMapping("/eliminarInforme/{id}")
+    public String eliminarInforme(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
+
+        Cliente cliente = clienteService.findOne(id);
+
+        if (uploadFileService.delete(cliente.getInforme())) {
+            clienteService.borraInforme(id);
+            flash.addFlashAttribute("info", "Informe " + cliente.getInforme() + " eliminado con exito!");
+        }
+
+        return "redirect:/ver/{id}";
+    }
 
     /**
      * Comproba si un rol passat per paràmetre està a la taula de rols
