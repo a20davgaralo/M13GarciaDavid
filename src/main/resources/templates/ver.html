@@ -49,6 +49,25 @@
                         </tr>
                     </tbody>
 				</table>
+
+				<div th:if="${cliente.informe == null || #strings.length(cliente.informe) < 1}" class="alert alert-info my-4" th:text="'No hay informes asignados para el cliente ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></div>
+
+				<table th:if="${cliente.informe != null && #strings.length(cliente.informe) > 1}" class="table table-bordered table-striped my-4">
+					<thead class="thead-dark">
+					<tr>
+						<th>Informe</th>
+						<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+					</tr>
+					</thead>
+					<tbody>
+						<th>
+							<!--TODO Poder eliminar los archivos subidos-->
+							<a th:href="'/uploads/' + ${cliente.informe}" th:text="${#strings.arraySplit(cliente.informe, '_')[1]}"></a>
+						<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger bn-xs" th:text="'Eliminar informe'" th:href="@{'/eliminarInforme/' + ${cliente.id}}"
+																	 onclick="return confirm('¿Está seguro que desea eliminar el informe?');"></a> </td>
+						</th>
+					</tbody>
+				</table>
 			</div>
 		</div>
 

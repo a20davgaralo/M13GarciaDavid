@@ -1,5 +1,6 @@
 package com.dga.springboot.m13garciadavid;
 
+import com.dga.springboot.m13garciadavid.models.service.IUploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,20 +18,26 @@ public class M13GarciaDavidApplication implements CommandLineRunner {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    IUploadFileService uploadFileService;
+
     public static void main(String[] args) {
         SpringApplication.run(M13GarciaDavidApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        //Generamos las contraseñas encriptadas
 
+        //Generem dues contrasenyes encriptades. Una per l'usuari admin i altre per l'usuari David
         String password = "12345";
 
         for (int i = 0; i < 2; i++) {
-            //Generamos dos contraseñas encriptadas desde 12345. Una para el usuario admin y otra para David
             String bcryptPassword = passwordEncoder.encode(password);
             System.out.println(bcryptPassword);
         }
+
+        //Aquests mètodes es poden fer servir per eliminar els arxius pujats cada vegada que iniciem sessió
+        //uploadFileService.deleteAll();
+        //uploadFileService.init();
     }
 }

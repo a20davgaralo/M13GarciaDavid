@@ -39,6 +39,8 @@ public class Cliente implements Serializable {
     @TelefonRegex
     private String telefono;
 
+    private String informe;
+
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Factura> facturas;
 
@@ -111,5 +113,13 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return nombre + " " + apellido;
+    }
+
+    public String getInforme() {
+        return informe;
+    }
+
+    public void setInforme(String informe) {
+        this.informe = informe;
     }
 }

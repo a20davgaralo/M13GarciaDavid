@@ -64,4 +64,4 @@ INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i
 INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i dietes fora CCAA', 300);
 
 
-INSERT INTO cliente (apellido, email, identificacion_fiscal, nombre, telefono) VALUES ('Garcia', 'david.garcia@gmail.com', '47721131Q','David', '6543216');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Garcia', 'david.garcia@gmail.com', '47721131Q', ' ', 'David', '6543216');
