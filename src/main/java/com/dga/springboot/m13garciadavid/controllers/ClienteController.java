@@ -7,6 +7,7 @@ import com.dga.springboot.m13garciadavid.util.paginator.PageRender;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +33,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -50,6 +52,9 @@ public class ClienteController {
 
     @Autowired
     private IUploadFileService uploadFileService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Gestió de la pujada d'arxius
@@ -120,7 +125,8 @@ public class ClienteController {
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page,
                          Model model, Authentication authentication,
-                         HttpServletRequest request) {
+                         HttpServletRequest request,
+                         Locale locale) {
 
         /*//Validem si l'usuari s'ha autenticat
         if (authentication != null) {
@@ -150,7 +156,7 @@ public class ClienteController {
 
         PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
 
-        model.addAttribute("titulo", "Listado de clientes");
+        model.addAttribute("titulo", messageSource.getMessage("texto.cliente.listar.titulo", null, locale));
 
         //Passam el llistat de clients a la vista
         model.addAttribute("clientes", clientes);

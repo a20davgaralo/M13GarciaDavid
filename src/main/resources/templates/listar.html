@@ -17,11 +17,11 @@
                 <thead>
                 <tr>
                     <th sec:authorize="hasRole('ROLE_USER')">ID</th>
-                    <th>Identificación Fiscal</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>email</th>
-                    <th>Teléfono</th>
+                    <th th:text="#{texto.cliente.identificacionFiscal}">Identificación Fiscal</th>
+                    <th th:text="#{texto.cliente.nombre}">Nombre</th>
+                    <th th:text="#{texto.cliente.apellido}">Apellido</th>
+                    <th th:text="#{texto.cliente.email}">email</th>
+                    <th th:text="#{texto.cliente.telefono}">Teléfono</th>
                     <th sec:authorize="hasRole('ROLE_ADMIN')">Crear factura</th>
                     <th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
                     <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
