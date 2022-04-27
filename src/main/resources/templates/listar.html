@@ -11,7 +11,7 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <h4 class="card-tittle">
-            <p><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/form}" class="btn btn-primary btn-xs">Crear cliente</a></p>
+            <p><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/form}" class="btn btn-primary btn-xs" th:text="#{texto.cliente.form.titulo.crear}">Crear cliente</a></p>
             </h4>
             <table class="table table-striped">
                 <thead>
@@ -22,8 +22,8 @@
                     <th th:text="#{texto.cliente.apellido}">Apellido</th>
                     <th th:text="#{texto.cliente.email}">email</th>
                     <th th:text="#{texto.cliente.telefono}">Teléfono</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">Crear factura</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.factura.form.titulo}">Crear factura</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.factura.form.titulo.}">Editar</th>
                     <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
                 </tr>
                 </thead>
