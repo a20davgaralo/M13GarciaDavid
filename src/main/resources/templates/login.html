@@ -10,23 +10,23 @@
     </div>
 
     <div class="card border-primary ">
-        <div class="card-header row justify-content-center">Identifíquese, por favor</div>
+        <div class="card-header row justify-content-center" th:text="#{texto.login.titulo}">Identifíquese, por favor</div>
         <div class="card-body">
             <form th:action="@{/login}" method="post" class="row justify-content-center">
 
                 <div class="col-md-5 my-4">
                 <!--<div class="col-md-6 offset-md-1 my-3" > NO QUEDA CENTRADO!!!!!-->
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Nombre de usuario" autofocus required>
+                    <input type="text" name="username" id="username" class="form-control" th:placeholder="#{texto.login.username}"  autofocus required>
                 </div>
 
                 <div class="col-md-5 my-4">
                 <!--<div class="col-md-6 offset-md-1 my-3">-->
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" id="password" class="form-control" th:placeholder="#{texto.login.password}" required>
                 </div>
 
                 <div class="col-md-5 my-4">
                 <!--<div class="col-md-6 offset-md-1 my-3">-->
-                    <input type="submit" class="btn btn-lg btn-dark col-12" value="Acceder">
+                    <input type="submit" class="btn btn-lg btn-dark col-12" th:value="#{texto.login.boton}" >
                 </div>
             </form>
 
