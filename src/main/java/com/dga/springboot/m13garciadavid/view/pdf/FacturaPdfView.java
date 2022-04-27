@@ -10,12 +10,16 @@ import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -28,6 +32,13 @@ import java.util.Map;
  */
 @Component("factura/ver")
 public class FacturaPdfView extends AbstractPdfView {
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private LocaleResolver localeResolver;
+
 
     private static final Font TITULO_F = new Font(Font.BOLD, 18, Font.TIMES_ROMAN);
     private static final Font PEQUE_F = new Font(Font.ITALIC, 10, Font.TIMES_ROMAN);
@@ -42,6 +53,8 @@ public class FacturaPdfView extends AbstractPdfView {
                                     PdfWriter writer, HttpServletRequest request,
                                     HttpServletResponse response) throws Exception {
 
+        //Gestió del multillenguatge
+        Locale locale = localeResolver.resolveLocale(request);
 
         //Fem cast perque el mètode model torna un objecte
         Factura factura = (Factura) model.get("factura");
@@ -57,7 +70,7 @@ public class FacturaPdfView extends AbstractPdfView {
         document.add(logo);
 
         //Títol
-        Paragraph titulo = new Paragraph("FACTURA", TITULO_F);
+        Paragraph titulo = new Paragraph(messageSource.getMessage("texto.cliente.factura", null, locale), TITULO_F);
         titulo.setAlignment(Element.ALIGN_CENTER);
         titulo.setSpacingAfter(20);
         document.add(titulo);
@@ -78,7 +91,7 @@ public class FacturaPdfView extends AbstractPdfView {
         //Per poder modificar els atributs de les cel·les, creem objectes de la classe PdfPCell
         PdfPCell cell = null;
 
-        cell = new PdfPCell(new Phrase("Datos del cliente", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.factura.ver.datos.cliente", null, locale), TITULO_PEQ_F));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setBackgroundColor(new Color(173, 208, 255));
         cell.setPadding(TITULO_CELL_PADDING);
@@ -99,21 +112,21 @@ public class FacturaPdfView extends AbstractPdfView {
         PdfPTable tabla2 = new PdfPTable(1);
         tabla2.setSpacingAfter(20);
 
-        cell = new PdfPCell(new Phrase("Datos de la factura", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.factura.ver.datos.factura", null, locale), TITULO_PEQ_F));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setBackgroundColor(new Color(191, 255, 173));
         cell.setPadding(TITULO_CELL_PADDING);
         tabla2.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Número factura: " + factura.getId()));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.cliente.factura.folio", null, locale) + ": " + factura.getId()));
         cell.setPadding(CELL_PADDING);
         tabla2.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Descripción: " + factura.getDescripcion()));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.cliente.factura.descripcion", null, locale) + ": " + factura.getDescripcion()));
         cell.setPadding(CELL_PADDING);
         tabla2.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Fecha: " + factura.getCreateAt()));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.cliente.factura.fecha", null, locale) + ": " + factura.getCreateAt()));
         cell.setPadding(CELL_PADDING);
         tabla2.addCell(cell);
 
@@ -122,7 +135,7 @@ public class FacturaPdfView extends AbstractPdfView {
         document.add(tabla2);
 
         PdfPTable tabla3 = new PdfPTable(4);
-        cell = new PdfPCell(new Phrase("Detalle de la factura", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.factura.ver.datos.detalle", null, locale), TITULO_PEQ_F));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setBackgroundColor(new Color(255, 173, 185));
         cell.setPadding(TITULO_CELL_PADDING);
@@ -131,22 +144,22 @@ public class FacturaPdfView extends AbstractPdfView {
 
         tabla3.setWidths(new float[] {3.5f, 1, 1, 1});
 
-        cell = new PdfPCell(new Phrase("Producto", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.factura.form.item.nombre", null, locale), TITULO_PEQ_F));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setPadding(CELL_PADDING);
         tabla3.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Precio", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.factura.form.item.precio", null, locale), TITULO_PEQ_F));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setPadding(CELL_PADDING);
         tabla3.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Cantidad", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.factura.form.item.cantidad", null, locale), TITULO_PEQ_F));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setPadding(CELL_PADDING);
         tabla3.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Total", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.factura.form.item.total", null, locale), TITULO_PEQ_F));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setPadding(CELL_PADDING);
         tabla3.addCell(cell);
@@ -175,7 +188,7 @@ public class FacturaPdfView extends AbstractPdfView {
         }
 
         //Footer. Creem una cel·la per ella
-        cell = new PdfPCell(new Phrase("Total", TITULO_PEQ_F));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("texto.cliente.factura.total", null, locale), TITULO_PEQ_F));
         //Numero columnas
         cell.setColspan(3);
         cell.setPadding(CELL_PADDING);
@@ -193,15 +206,15 @@ public class FacturaPdfView extends AbstractPdfView {
 
         Paragraph pago = new Paragraph();
         pago.setSpacingBefore(40);
-        pago.add(new Paragraph("Puede hacer efectivo el ingreso del importe por transferencia al número de cuenta siguiente:", NORMAL_F));
-        pago.add(new Paragraph("IBAN: ES49 XXXX XXXX XXXX XXXX", NORMAL_F));
+        pago.add(new Paragraph(messageSource.getMessage("texto.factura.ver.datos.ingreso", null, locale), NORMAL_F));
+        pago.add(new Paragraph(messageSource.getMessage("texto.factura.ver.datos.IBAN", null, locale), NORMAL_F));
         pago.setAlignment(Element.ALIGN_LEFT);
         pago.setIndentationLeft(40);
         document.add(pago);
 
         Paragraph firma = new Paragraph();
         firma.setSpacingBefore(40);
-        firma.add(new Paragraph("Firmado", PEQUE_F));
+        firma.add(new Paragraph(messageSource.getMessage("texto.factura.ver.datos.firma", null, locale), PEQUE_F));
         firma.setAlignment(Element.ALIGN_RIGHT);
         firma.setIndentationRight(40);
         document.add(firma);
