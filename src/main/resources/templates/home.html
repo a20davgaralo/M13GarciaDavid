@@ -9,9 +9,11 @@
         <div class="card-header" th:text="${titulo}"></div>
 
         <div class="card-body">
-            <h5 sec:authorize="!isAuthenticated()"><span th:utext="#{texto.homePage.noLogeado}"></span></h5>
+            <!--<a th:href="@{/login}">Inicie sesión</a> o haga click en la imagen para acceder a nuestra web corporativa-->
+            <h5 sec:authorize="!isAuthenticated()"><a th:href="@{/login}"><span th:text="#{texto.homePage.noLogeado}"></span></a></h5>
 
-            <h5 sec:authorize="isAuthenticated()"><span th:utext="#{texto.homePage.logeado}"></span></h5>
+            <h5 sec:authorize="isAuthenticated()"><a th:href="@{/listar}"><span th:utext="#{texto.homePage.logeado}"></span></a></h5>
+            <h5 th:text="#{texto.homePage.accesoWeb}"></h5>
             <div style="text-align: center" class="container py-3">
                 <a href="http://www.abrildetectives.com"><img th:src="@{/images/abril-detectives-cibereye.jpg}" alt="Abril logo" width="55%" height="55%"/></a>
             </div>
