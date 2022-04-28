@@ -6,6 +6,9 @@
 <body>
 <header th:replace="layout/layout :: header"></header>
 
+<!--Es fa servir per poder traduïr la pregunta per eliminar client estant aquesta amb javascript-->
+<div id="i18n_eliminar_cliente" th:text="#{texto.cliente.okEliminar}" style="display: none;"></div>
+
 <div class="container py-4">
     <div class="card bg-light">
         <div class="card-header" th:text="${titulo}"></div>
@@ -36,11 +39,11 @@
                     <td th:text="${cliente.apellido}"></td>
                     <td th:text="${cliente.email}"></td>
                     <td th:text="${cliente.telefono}"></td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-success bn-xs" th:href="@{'/factura/form/' + ${cliente.id}}" th:text="'Crear factura'"></a></td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="'Editar'"></a>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-success bn-xs" th:href="@{'/factura/form/' + ${cliente.id}}" th:text="#{texto.cliente.factura.crear}"></a></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="#{texto.cliente.editar}"></a>
                     </td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs" th:href="@{/eliminar/} + ${cliente.id}" th:text="'Eliminar'"
-                           onclick="return confirm('¿Estás seguro que quieres eliminar este cliente?');"></a></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs" th:href="@{/eliminar/} + ${cliente.id}" th:text="#{texto.cliente.eliminar}"
+                           onclick="return confirm(document.getElementById('i18n_eliminar_cliente').innerHTML);"></a></td>
                 </tr>
                 </tbody>
             </table>
