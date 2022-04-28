@@ -96,7 +96,7 @@ public class ClienteController {
      */
     @Secured({"ROLE_USER", "ROLE_ADMIN"}) //Per a diversos rols d'usuari
     @GetMapping(value = "/ver/{id}")
-    public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+    public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale) {
 
         //Forma nueva
         Cliente cliente = clienteService.fetchByIdWithFacturas(id);
@@ -107,7 +107,7 @@ public class ClienteController {
         }
 
         model.put("cliente", cliente);
-        model.put("titulo", "Detalle cliente: " + cliente.getNombre());
+        model.put("titulo", messageSource.getMessage("texto.cliente.detalle.titulo", null, locale) + ": " + cliente.getNombre());
         return "ver";
     }
 
