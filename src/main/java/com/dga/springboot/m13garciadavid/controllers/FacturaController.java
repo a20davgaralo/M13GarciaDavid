@@ -66,7 +66,7 @@ public class  FacturaController {
         }
 
         model.addAttribute("factura", factura);
-        model.addAttribute("titulo", messageSource.getMessage("texto.factura.form.factura", null, locale).concat(factura.getDescripcion()));
+        model.addAttribute("titulo", messageSource.getMessage("texto.factura.form.factura", null, locale).concat(": ").concat(factura.getDescripcion()));
 
         return "factura/ver";
     }
@@ -139,7 +139,7 @@ public class  FacturaController {
         //Comprova si l'id es null o no hi han elements
         if(itemId == null || itemId.length == 0) {
             model.addAttribute("titulo", messageSource.getMessage("texto.cliente.factura.crear", null, locale));
-            model.addAttribute("error", "Error: La factura debe contener alguna línea");
+            model.addAttribute("error", messageSource.getMessage("texto.factura.flash.lineas.error", null, locale));
             return "factura/form";
         }
 
@@ -166,10 +166,10 @@ public class  FacturaController {
         status.setComplete();
 
         //Passem missatge flash indicant que la factura s'ha creat
-        flash.addFlashAttribute("succes", "Factura creada con éxito");
+        flash.addFlashAttribute("success", messageSource.getMessage("texto.factura.flash.crear.success", null, locale));
 
         //Redirigim a l'estat del client
-        return "redirect:/ver/" + factura.getCliente().getId();
+       return "redirect:/ver/" + factura.getCliente().getId();
     }
 
     /**
@@ -179,17 +179,17 @@ public class  FacturaController {
      * @return
      */
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
+    public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash, Locale locale) {
 
         Factura factura = clienteService.findFacturaById(id);
 
         if (factura != null) {
             clienteService.deleteFactura(id);
-            flash.addFlashAttribute("success", "Factura eliminada con éxito");
+            flash.addFlashAttribute("success", messageSource.getMessage("texto.factura.flash.eliminar.success", null, locale));
             return "redirect:/ver/" + factura.getCliente().getId();
         }
 
-        flash.addFlashAttribute("error", "La factura no existe en la base de datos");
+        flash.addFlashAttribute("error", messageSource.getMessage("texto.factura.flash.db.error", null, locale));
         return "redirect:/listar";
     }
 }
