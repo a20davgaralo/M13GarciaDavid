@@ -94,7 +94,7 @@ public class ClienteController {
      * @param flash
      * @return
      */
-    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //Per a diversos rols d'usuari
+    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale) {
 
@@ -121,7 +121,7 @@ public class ClienteController {
      * @param request
      * @return
      */
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //TODO CANVI AQUI, NOMES POT VEURE-HO ROLE_ADMIN
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page,
                          Model model, Authentication authentication,
