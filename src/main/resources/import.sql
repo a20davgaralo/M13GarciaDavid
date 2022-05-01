@@ -64,4 +64,14 @@ INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i
 INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Desplaçament i dietes fora CCAA', 300);
 
 
-INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Garcia', 'david.garcia@gmail.com', '47721131Q', ' ', 'David', '6543216');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Garcia', 'david.garcia@gmail.com', '47721131Q', ' ', 'David', '654321654');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Rovira', 'aeris@gmail.com', '82335847G', ' ', 'Aeris', '677715004');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Rovira', 'eira@gmail.com', '92335847H', ' ', 'Eira', '654188716');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Sanchez', 'michele.sanchez@example.com', '12335847V', ' ', 'Michele', '654331654');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Mills', 'anne.mills@example.com', '22335847A', ' ', 'Anne', '654542657');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Harper', 'willard.harper@example.com', '32335847B', ' ', 'Willard', '664262654');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Obrien', 'isabella.obrien@example.com', '42335847C', ' ', 'Isabella', '672742654');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Murphy', 'george.murphy@example.com', '52335847D', ' ', 'George', '683388787');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Sullivan', 'herman.sullivan@example.com', '62335847E', ' ', 'Herman', '693520515');
+INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Ferguson', 'vanessa.ferguson@example.com', '72335847F', ' ', 'Vanessa', '643642151');
+

@@ -47,7 +47,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //Amb això asginem rutes, per a USERS, ADMINS i ANÒNIMS. També fem que vagi a login o logout directament
         //Ho comentem perquè totes aquestes restriccions, finalment, es faran usant anotacions al controlador de Client
-        http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**", "/listar").permitAll()
+        http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**", "/listar", "/locale").permitAll()
                 /* .antMatchers("/ver/**").hasAnyRole("USER")
                  .antMatchers("/uploads/**").hasAnyRole("USER")
                  .antMatchers("/form/**").hasAnyRole("ADMIN")

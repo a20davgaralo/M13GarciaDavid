@@ -6,41 +6,44 @@
 <body>
 <header th:replace="layout/layout :: header"></header>
 
+<!--Es fa servir per poder traduïr la pregunta per eliminar client estant aquesta amb javascript-->
+<div id="i18n_eliminar_cliente" th:text="#{texto.cliente.okEliminar}" style="display: none;"></div>
+
 <div class="container py-4">
     <div class="card bg-light">
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <h4 class="card-tittle">
-            <p><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/form}" class="btn btn-primary btn-xs">Crear cliente</a></p>
+            <p><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/form}" class="btn btn-primary btn-xs" th:text="#{texto.cliente.form.titulo.crear}">Crear cliente</a></p>
             </h4>
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th sec:authorize="hasRole('ROLE_USER')">ID</th>
-                    <th>Identificación Fiscal</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>email</th>
-                    <th>Teléfono</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">Crear factura</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+                    <th th:text="#{texto.cliente.identificacionFiscal}">Identificación Fiscal</th>
+                    <th th:text="#{texto.cliente.nombre}">Nombre</th>
+                    <th th:text="#{texto.cliente.apellido}">Apellido</th>
+                    <th th:text="#{texto.cliente.email}">email</th>
+                    <th th:text="#{texto.cliente.telefono}">Teléfono</th>
+                    <th sec:authorize="hasRole('ROLE_USER')">Ver</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.factura.form.titulo}">Crear factura</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.cliente.editar}">Editar</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.cliente.eliminar}">Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="cliente: ${clientes}">
-                    <td sec:authorize="hasRole('ROLE_USER')">
-                        <a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${cliente.id}" th:text="${cliente.id}"></a></td>
                     <td th:text="${cliente.identificacionFiscal}"></td>
                     <td th:text="${cliente.nombre}"></td>
                     <td th:text="${cliente.apellido}"></td>
                     <td th:text="${cliente.email}"></td>
                     <td th:text="${cliente.telefono}"></td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-success bn-xs" th:href="@{'/factura/form/' + ${cliente.id}}" th:text="'Crear factura'"></a></td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="'Editar'"></a>
+                    <td sec:authorize="hasRole('ROLE_USER')">
+                        <a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${cliente.id}" th:text="#{texto.cliente.ver}"></a></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-success bn-xs" th:href="@{'/factura/form/' + ${cliente.id}}" th:text="#{texto.cliente.factura.crear}"></a></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="#{texto.cliente.editar}"></a>
                     </td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs" th:href="@{/eliminar/} + ${cliente.id}" th:text="'Eliminar'"
-                           onclick="return confirm('¿Estás seguro que quieres eliminar este cliente?');"></a></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs" th:href="@{/eliminar/} + ${cliente.id}" th:text="#{texto.cliente.eliminar}"
+                           onclick="return confirm(document.getElementById('i18n_eliminar_cliente').innerHTML);"></a></td>
                 </tr>
                 </tbody>
             </table>
