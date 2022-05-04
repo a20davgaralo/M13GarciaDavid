@@ -51,9 +51,7 @@ INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(3, 2, 6);
 */
 
 
-/* Entrada en la tabla users con las contraseñas encriptadas por Bcrypt */
-INSERT INTO user (username, password, enabled) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1);
-INSERT INTO user (username, password, enabled) VALUES('admin', '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 1);
+
 
 
 INSERT INTO producto (create_at, nombre, precio) VALUES (NOW(), 'Dia de seguiment', 500);
@@ -76,9 +74,12 @@ INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, te
 INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Ferguson', 'vanessa.ferguson@example.com', '72335847F', ' ', 'Vanessa', '643642151');
 
 
-UPDATE
-    user
-SET
-    id_cliente = 1
-WHERE
-    id = 1;
+/* Entrada en la tabla users con las contraseñas encriptadas por Bcrypt */
+/*INSERT INTO user (username, password, enabled, id_cliente) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 1);
+INSERT INTO user (username, password, enabled, id_cliente) VALUES('admin', '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 1, null);*/
+
+INSERT INTO user (username, password, enabled) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1);
+INSERT INTO user (username, password, enabled) VALUES('admin', '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 1);
+
+
+INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 1), ('ROLE_ADMIN', 2);

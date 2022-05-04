@@ -44,6 +44,9 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Factura> facturas;
 
+    /*@OneToOne(mappedBy = "id_cliente")
+    private Usuario usuario;*/
+
     public Cliente() {
         facturas = new ArrayList<>();
     }

@@ -30,4 +30,5 @@ public interface IClienteDao extends PagingAndSortingRepository<Cliente, Long> {
     @Modifying
     @Query("UPDATE Cliente c SET c.informe = '' WHERE c.id =?1")
     public void setInformeVoid(Long id);
+
 }

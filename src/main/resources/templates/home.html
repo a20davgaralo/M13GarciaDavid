@@ -14,7 +14,12 @@
                 <span th:text="#{texto.homePage.accesoWeb}"></span>
             </h5>
 
-            <h5 sec:authorize="isAuthenticated()"><a th:href="@{/listar}">
+            <h5 sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/listar}">
+                <span th:utext="#{texto.homePage.logeado}"></span></a>
+                <span th:text="#{texto.homePage.accesoWeb}"></span>
+            </h5>
+
+            <h5 sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/cliente}">
                 <span th:utext="#{texto.homePage.logeado}"></span></a>
                 <span th:text="#{texto.homePage.accesoWeb}"></span>
             </h5>
