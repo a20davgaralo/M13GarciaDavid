@@ -1,9 +1,9 @@
 package com.dga.springboot.m13garciadavid.controllers;
 
-import com.dga.springboot.m13garciadavid.models.dao.IUsuarioDao;
 import com.dga.springboot.m13garciadavid.models.entity.Cliente;
 import com.dga.springboot.m13garciadavid.models.service.IClienteService;
 import com.dga.springboot.m13garciadavid.models.service.IUploadFileService;
+import com.dga.springboot.m13garciadavid.models.service.UserService;
 import com.dga.springboot.m13garciadavid.util.paginator.PageRender;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,9 +57,6 @@ public class ClienteController {
     @Autowired
     private MessageSource messageSource;
 
-    @Autowired
-    private IUsuarioDao usuarioDao;
-
     /**
      * Gestió de la pujada d'arxius
      * @param filename
@@ -98,7 +95,7 @@ public class ClienteController {
      * @param flash
      * @return
      */
-    @Secured("ROLE_ADMIN") //Per a diversos rols d'usuari
+    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale) {
 
@@ -117,6 +114,7 @@ public class ClienteController {
 
     /**
      * Per mostrar tot el llistat de clients
+     * Amb "/" fem que aquesta sigui la pàgina d'inici
      *
      * @param page
      * @param model
@@ -124,7 +122,7 @@ public class ClienteController {
      * @param request
      * @return
      */
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //TODO CANVI AQUI, NOMES POT VEURE-HO ROLE_ADMIN
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page,
                          Model model, Authentication authentication,
@@ -314,8 +312,8 @@ public class ClienteController {
     @Secured("ROLE_USER")
     @RequestMapping(value = "/cliente", method = RequestMethod.GET)
     public String listarCliente(Model model, Authentication authentication,
-                         HttpServletRequest request,
-                         Locale locale) {
+                                HttpServletRequest request,
+                                Locale locale) {
 
         //Validem fent servir el mètode hasRole
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -329,14 +327,13 @@ public class ClienteController {
 
         model.addAttribute("titulo", messageSource.getMessage("texto.cliente.listar.titulo", null, locale));
 
-        int id_cliente;
-        logger.info("Datos de objeto auth".concat(auth.toString()));
+        logger.info("Datos de objeto auth".concat(auth.getName()));
 
-        //logger.info("Cliente obtenido número " + usuarioDao.getIdClientUser(auth.getName()));
+        logger.info("Cliente obtenido número " + UserService.getIDClient(auth.getName()));
 
-       // Cliente cliente = clienteService.findOne(usuarioDao.getIdClientUser(auth.getName()));
+        Cliente cliente = clienteService.findOne((long)UserService.getIDClient(auth.getName()));
 
-        //model.addAttribute("clientes", cliente);
+        model.addAttribute("clientes", cliente);
         return "cliente";
     }
 
