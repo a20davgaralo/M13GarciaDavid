@@ -75,3 +75,10 @@ INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, te
 INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Sullivan', 'herman.sullivan@example.com', '62335847E', ' ', 'Herman', '693520515');
 INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Ferguson', 'vanessa.ferguson@example.com', '72335847F', ' ', 'Vanessa', '643642151');
 
+
+UPDATE
+    user
+SET
+    id_cliente = 1
+WHERE
+    id = 1;
