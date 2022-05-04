@@ -112,7 +112,4 @@ public class ClienteServiceImpl implements IClienteService {
         clienteDao.setInformeVoid(id);
     }
 
-
-
-
 }

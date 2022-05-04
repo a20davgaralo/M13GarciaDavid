@@ -28,4 +28,15 @@ create table authoritie
 );
 
 
-INSERT INTO authoritie VALUES (1, 1, 'ROLE_USER'), (2, 2, 'ROLE_USER'), (3, 2, 'ROLE_ADMIN');
+# Afegim una clau forànea a la taula user per identificar a un client amb aquest usuari
+ALTER TABLE
+    user
+ADD COLUMN
+    id_cliente BIGINT(20),
+ADD FOREIGN KEY
+    user (id_cliente) REFERENCES cliente (id)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+DESCRIBE cliente;
+
+

@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,9 +27,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginSuccesHandler succesHandler;
 
-    //Injectem la connexió a la BBDD
     @Autowired
-    private DataSource dataSource;
+    private UserDetailsService userDetailsService;
 
     //Registrar password encoder i defecte el bcrypt. Retorna la instància i la desa al contenidor @Bean
     @Bean
@@ -67,7 +66,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Registra usuaris. Primer en memòria, després a BBDD
+     * Registra usuaris a BBDD fent servir JPA
      * @param builder
      * @throws Exception
      */
@@ -79,12 +78,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         ///////////////////////CREACIÓ USUARIS EN BBDD////////////////////////////////////
 
-        //Fa les consultes automàticament passant el paràmetre al ? sobre el camp login
-        builder.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("SELECT username, password, enabled FROM user WHERE username = ?")
-                .authoritiesByUsernameQuery("SELECT u.username, a.authority FROM authoritie a INNER JOIN user u ON (a.user_id = u.id) WHERE u.username =?");
+        builder.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
 
     }
 }

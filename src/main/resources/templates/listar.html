@@ -24,7 +24,7 @@
                     <th th:text="#{texto.cliente.apellido}">Apellido</th>
                     <th th:text="#{texto.cliente.email}">email</th>
                     <th th:text="#{texto.cliente.telefono}">Teléfono</th>
-                    <th sec:authorize="hasRole('ROLE_USER')">Ver</th>
+                    <th th:text="#{texto.cliente.ver}">Ver</th>
                     <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.factura.form.titulo}">Crear factura</th>
                     <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.cliente.editar}">Editar</th>
                     <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{texto.cliente.eliminar}">Eliminar</th>
@@ -37,7 +37,7 @@
                     <td th:text="${cliente.apellido}"></td>
                     <td th:text="${cliente.email}"></td>
                     <td th:text="${cliente.telefono}"></td>
-                    <td sec:authorize="hasRole('ROLE_USER')">
+                    <td >
                         <a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${cliente.id}" th:text="#{texto.cliente.ver}"></a></td>
                     <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-success bn-xs" th:href="@{'/factura/form/' + ${cliente.id}}" th:text="#{texto.cliente.factura.crear}"></a></td>
                     <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="#{texto.cliente.editar}"></a>

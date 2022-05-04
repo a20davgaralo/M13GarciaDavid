@@ -23,8 +23,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" th:href="@{/}" th:text="#{texto.menu.home}">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="nav-link" th:href="@{/listar}" th:text="#{texto.menu.customer}">Clientes</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                        <a class="nav-link" th:href="@{/cliente}" th:text="#{texto.menu.customer}">Clientes</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav justify-content-end">

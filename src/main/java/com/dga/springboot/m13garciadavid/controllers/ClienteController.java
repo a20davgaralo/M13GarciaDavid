@@ -3,6 +3,7 @@ package com.dga.springboot.m13garciadavid.controllers;
 import com.dga.springboot.m13garciadavid.models.entity.Cliente;
 import com.dga.springboot.m13garciadavid.models.service.IClienteService;
 import com.dga.springboot.m13garciadavid.models.service.IUploadFileService;
+import com.dga.springboot.m13garciadavid.models.service.UserService;
 import com.dga.springboot.m13garciadavid.util.paginator.PageRender;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -86,6 +87,7 @@ public class ClienteController {
         model.addAttribute("titulo", messageSource.getMessage("texto.homePage.titulo", null, locale));
         return "home";
     }
+
     /**
      * Per mostrar les dades d'un client determinat
      *
@@ -94,7 +96,7 @@ public class ClienteController {
      * @param flash
      * @return
      */
-    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //Per a diversos rols d'usuari
+    @Secured("ROLE_ADMIN") //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale) {
 
@@ -121,7 +123,7 @@ public class ClienteController {
      * @param request
      * @return
      */
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @Secured("ROLE_ADMIN") //TODO CANVI AQUI, NOMES POT VEURE-HO ROLE_ADMIN
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page,
                          Model model, Authentication authentication,
@@ -250,7 +252,7 @@ public class ClienteController {
             cliente.setInforme(uniqueFilename);
         }
 
-        String mensajeFlash = (cliente.getId() != null) ? messageSource.getMessage("texto.cliente.flash.editar.success", null, locale) : messageSource.getMessage("texto.cliente.flash.crear.successs", null, locale);
+        String mensajeFlash = (cliente.getId() != null) ? messageSource.getMessage("texto.cliente.flash.editar.success", null, locale) : messageSource.getMessage("texto.cliente.flash.crear.success", null, locale);
         clienteService.save(cliente);
         status.setComplete(); //Amb això eliminem l'objecte client de la sessió
         flash.addFlashAttribute("success", mensajeFlash);
@@ -297,6 +299,76 @@ public class ClienteController {
         }
 
         return "redirect:/ver/{id}";
+    }
+
+
+    /**
+     * Per mostrar les dades d'un client determinat
+     *
+     * @param model
+     * @param authentication
+     * @param request
+     * @return
+     */
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/cliente", method = RequestMethod.GET)
+    public String listarCliente(Model model, Authentication authentication,
+                                HttpServletRequest request,
+                                Locale locale) {
+
+        //Validem fent servir el mètode hasRole
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (hasRole("ROLE_ADMIN")) {
+            logger.info("Hola ".concat(auth.getName()).concat(" tienes acceso como administrador!"));
+        } else if (hasRole("ROLE_USER")) {
+            logger.info("Hola ".concat(auth.getName()).concat(" tienes acceso como usuario!"));
+        } else {
+            logger.info("Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
+        }
+
+        model.addAttribute("titulo", messageSource.getMessage("texto.cliente.listar.titulo", null, locale));
+
+        logger.info("Datos de objeto auth".concat(auth.getName()));
+
+        logger.info("Cliente obtenido número " + UserService.getIDClient(auth.getName()));
+
+        Cliente cliente = clienteService.findOne((long)UserService.getIDClient(auth.getName()));
+
+        model.addAttribute("clientes", cliente);
+        return "cliente";
+    }
+
+    /**
+     * Per mostrar les dades d'un client determinat
+     *
+     * @param id
+     * @param model
+     * @param flash
+     * @return
+     */
+    @Secured("ROLE_USER") //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
+    @GetMapping(value = "/cliente/ver/{id}")
+    public String verCliente(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale, Authentication authentication) {
+
+        //Forma nueva
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Cliente cliente = clienteService.findOne((long)UserService.getIDClient(auth.getName()));
+
+        if (cliente == null) {
+            flash.addFlashAttribute("error", messageSource.getMessage("texto.cliente.flash.db.error ", null, locale));
+            return "redirect:/listar";
+        }
+
+        logger.info("Cliente obtenido número " + UserService.getIDClient(auth.getName()));
+        if(cliente.getId() == id) {
+            logger.info("Id de client agafada " + cliente.getId());
+            model.put("cliente", cliente);
+        }
+        else {
+
+        }
+        model.put("titulo", messageSource.getMessage("texto.cliente.detalle.titulo", null, locale) + ": " + cliente.getNombre());
+        return "verCliente";
     }
 
     /**
