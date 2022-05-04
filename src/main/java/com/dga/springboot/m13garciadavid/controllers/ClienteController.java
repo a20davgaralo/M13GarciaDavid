@@ -352,11 +352,12 @@ public class ClienteController {
 
         //Forma nueva
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Cliente cliente = clienteService.findOne((long)UserService.getIDClient(auth.getName()));
+        int id_cliente = UserService.getIDClient(auth.getName());
+        Cliente cliente = clienteService.findOne((long) id_cliente);
 
         if (cliente == null) {
             flash.addFlashAttribute("error", messageSource.getMessage("texto.cliente.flash.db.error ", null, locale));
-            return "redirect:/listar";
+            return "redirect:/cliente";
         }
 
         logger.info("Cliente obtenido número " + UserService.getIDClient(auth.getName()));
@@ -365,7 +366,7 @@ public class ClienteController {
             model.put("cliente", cliente);
         }
         else {
-
+            return "redirect:/cliente/ver/".concat(String.valueOf(id_cliente));
         }
         model.put("titulo", messageSource.getMessage("texto.cliente.detalle.titulo", null, locale) + ": " + cliente.getNombre());
         return "verCliente";
