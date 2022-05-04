@@ -29,7 +29,7 @@
                     <td th:text="${cliente.email}"></td>
                     <td th:text="${cliente.telefono}"></td>
                     <td sec:authorize="hasRole('ROLE_USER')">
-                        <a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${cliente.id}" th:text="#{texto.cliente.ver}"></a></td>
+                        <a class="btn btn-primary btn-xs" th:href="@{/cliente/ver/} + ${cliente.id}" th:text="#{texto.cliente.ver}"></a></td>
 
                 </tr>
                 </tbody>

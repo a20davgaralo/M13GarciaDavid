@@ -348,19 +348,27 @@ public class ClienteController {
      */
     @Secured("ROLE_USER") //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
     @GetMapping(value = "/cliente/ver/{id}")
-    public String verCliente(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale) {
+    public String verCliente(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale, Authentication authentication) {
 
         //Forma nueva
-        Cliente cliente = clienteService.fetchByIdWithFacturas(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Cliente cliente = clienteService.findOne((long)UserService.getIDClient(auth.getName()));
 
         if (cliente == null) {
             flash.addFlashAttribute("error", messageSource.getMessage("texto.cliente.flash.db.error ", null, locale));
             return "redirect:/listar";
         }
 
-        model.put("cliente", cliente);
+        logger.info("Cliente obtenido número " + UserService.getIDClient(auth.getName()));
+        if(cliente.getId() == id) {
+            logger.info("Id de client agafada " + cliente.getId());
+            model.put("cliente", cliente);
+        }
+        else {
+
+        }
         model.put("titulo", messageSource.getMessage("texto.cliente.detalle.titulo", null, locale) + ": " + cliente.getNombre());
-        return "ver";
+        return "verCliente";
     }
 
     /**
