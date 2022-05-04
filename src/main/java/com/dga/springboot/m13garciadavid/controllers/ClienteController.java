@@ -87,6 +87,7 @@ public class ClienteController {
         model.addAttribute("titulo", messageSource.getMessage("texto.homePage.titulo", null, locale));
         return "home";
     }
+
     /**
      * Per mostrar les dades d'un client determinat
      *
@@ -95,7 +96,7 @@ public class ClienteController {
      * @param flash
      * @return
      */
-    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
+    @Secured("ROLE_ADMIN") //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale) {
 
@@ -122,7 +123,7 @@ public class ClienteController {
      * @param request
      * @return
      */
-    @Secured({"ROLE_USER", "ROLE_ADMIN"}) //TODO CANVI AQUI, NOMES POT VEURE-HO ROLE_ADMIN
+    @Secured("ROLE_ADMIN") //TODO CANVI AQUI, NOMES POT VEURE-HO ROLE_ADMIN
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page,
                          Model model, Authentication authentication,
@@ -251,7 +252,7 @@ public class ClienteController {
             cliente.setInforme(uniqueFilename);
         }
 
-        String mensajeFlash = (cliente.getId() != null) ? messageSource.getMessage("texto.cliente.flash.editar.success", null, locale) : messageSource.getMessage("texto.cliente.flash.crear.successs", null, locale);
+        String mensajeFlash = (cliente.getId() != null) ? messageSource.getMessage("texto.cliente.flash.editar.success", null, locale) : messageSource.getMessage("texto.cliente.flash.crear.success", null, locale);
         clienteService.save(cliente);
         status.setComplete(); //Amb això eliminem l'objecte client de la sessió
         flash.addFlashAttribute("success", mensajeFlash);
@@ -335,6 +336,31 @@ public class ClienteController {
 
         model.addAttribute("clientes", cliente);
         return "cliente";
+    }
+
+    /**
+     * Per mostrar les dades d'un client determinat
+     *
+     * @param id
+     * @param model
+     * @param flash
+     * @return
+     */
+    @Secured("ROLE_USER") //Per a diversos rols d'usuari //TODO CANVI AQUI. EL ROLE_USER NOMES PODRIA VEURE EL SEU ID
+    @GetMapping(value = "/cliente/ver/{id}")
+    public String verCliente(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash, Locale locale) {
+
+        //Forma nueva
+        Cliente cliente = clienteService.fetchByIdWithFacturas(id);
+
+        if (cliente == null) {
+            flash.addFlashAttribute("error", messageSource.getMessage("texto.cliente.flash.db.error ", null, locale));
+            return "redirect:/listar";
+        }
+
+        model.put("cliente", cliente);
+        model.put("titulo", messageSource.getMessage("texto.cliente.detalle.titulo", null, locale) + ": " + cliente.getNombre());
+        return "ver";
     }
 
     /**
