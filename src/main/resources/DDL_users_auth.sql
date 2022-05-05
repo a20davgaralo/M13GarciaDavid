@@ -30,7 +30,7 @@ create table authoritie
 
 # Afegim una clau forànea a la taula user per identificar a un client amb aquest usuari
 ALTER TABLE
-    user
+    a20davgaralo_M13Test.user
 ADD COLUMN
     id_cliente BIGINT(20),
 ADD FOREIGN KEY

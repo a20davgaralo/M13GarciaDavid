@@ -42,13 +42,20 @@ public interface IClienteService {
 
     public void deleteFactura(Long id);
 
-
     public Factura fetchFacturabyIdfetchByIdWithClienteWithItemFacturaWithProdcuto(Long id);
 
     public Cliente fetchByIdWithFacturas(Long id);
 
-    public void borraInforme(Long id);
+    //public void borraInforme(Long id);
 
     public Informe fetchByIdWithCliente(Long id);
+
+    public void saveInforme(Informe informe);
+
+    public Informe finInformeById(Long id);
+
+    public void deleteInforme(Long id);
+
+    public Cliente fetchByIdWithInformes(Long id);
 
 }

@@ -74,14 +74,23 @@ INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, te
 INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, telefono) VALUES ('Ferguson', 'vanessa.ferguson@example.com', '72335847F', ' ', 'Vanessa', '643642151');
 
 
+# PARA BBDD OFICIAL
 /* Entrada en la tabla users con las contraseñas encriptadas por Bcrypt */
-INSERT INTO user (username, password, enabled, id_cliente) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 1);
+/*INSERT INTO user (username, password, enabled, id_cliente) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 1);
 INSERT INTO user (username, password, enabled, id_cliente) VALUES('admin', '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 1, null);
 INSERT INTO user (username, password, enabled, id_cliente) VALUES ('Aeris', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 2);
 INSERT INTO user (username, password, enabled, id_cliente) VALUES ('Toni', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 11);
-
+*/
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 1), ('ROLE_ADMIN', 2);
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 3);
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 4);
 
-DELETE FROM authoritie where id = 3;
+#DELETE FROM authoritie where id = 3;
+
+# PARA BBBDD TEST
+INSERT INTO a20davgaralo_M13Test.user (enabled, password, username, id_cliente) VALUES(1, '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 'David', 1);
+INSERT INTO a20davgaralo_M13Test.user (enabled, password, username, id_cliente) VALUES(1, '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu','admin',  null);
+INSERT INTO a20davgaralo_M13Test.user (enabled, password, username, id_cliente) VALUES (1, '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 'Aeris', 2);
+
+INSERT INTO a20davgaralo_M13Test.authoritie (authority, user_id) VALUES ('ROLE_USER', 1), ('ROLE_ADMIN', 2);
+INSERT INTO a20davgaralo_M13Test.authoritie (authority, user_id) VALUES ('ROLE_USER', 3);

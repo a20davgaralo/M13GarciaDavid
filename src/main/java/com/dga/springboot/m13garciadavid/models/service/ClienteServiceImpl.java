@@ -111,15 +111,35 @@ public class ClienteServiceImpl implements IClienteService {
         return facturaDao.fetchByIdWithClienteWithItemFacturaWithProdcuto(id);
     }
 
-    @Transactional
+    /*@Transactional
     @Override
     public void borraInforme(Long id) {
         clienteDao.setInformeVoid(id);
-    }
+    }*/
 
     @Transactional
     @Override
     public Informe fetchByIdWithCliente(Long id) {
        return informeDao.fetchByIdWithCliente(id);
+    }
+
+    @Override
+    public void saveInforme(Informe informe) {
+        informeDao.save(informe);
+    }
+
+    @Override
+    public Informe finInformeById(Long id) {
+        return informeDao.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteInforme(Long id) {
+        informeDao.deleteById(id);
+    }
+
+    @Override
+    public Cliente fetchByIdWithInformes(Long id) {
+        return clienteDao.fetchByIdWithInformes(id);
     }
 }

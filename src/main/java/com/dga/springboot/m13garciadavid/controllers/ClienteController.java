@@ -232,7 +232,7 @@ public class ClienteController {
             return "form";
         }
 
-        if (!informe.isEmpty()) {
+        /*if (!informe.isEmpty()) {
 
             if (cliente.getId() != null && cliente.getId() > 0 && cliente.getInforme() != null
                     && cliente.getInforme().length() > 0) {
@@ -250,7 +250,7 @@ public class ClienteController {
             flash.addFlashAttribute("info", messageSource.getMessage("texto.cliente.flash.informe.subir.success", null, locale) + "'" + uniqueFilename + "'");
 
             cliente.setInforme(uniqueFilename);
-        }
+        }*/
 
         String mensajeFlash = (cliente.getId() != null) ? messageSource.getMessage("texto.cliente.flash.editar.success", null, locale) : messageSource.getMessage("texto.cliente.flash.crear.success", null, locale);
         clienteService.save(cliente);
@@ -290,13 +290,13 @@ public class ClienteController {
     @GetMapping("/eliminarInforme/{id}")
     public String eliminarInforme(@PathVariable(value = "id") Long id, RedirectAttributes flash, Locale locale) {
 
-        Cliente cliente = clienteService.findOne(id);
+        /*Cliente cliente = clienteService.findOne(id);
 
         if (uploadFileService.delete(cliente.getInforme())) {
             clienteService.borraInforme(id);
             String mensajeInformeEliminar = String.format(messageSource.getMessage("texto.cliente.flash.informe.eliminar.success", null, locale), cliente.getInforme());
             flash.addFlashAttribute("info", mensajeInformeEliminar);
-        }
+        }*/
 
         return "redirect:/ver/{id}";
     }
