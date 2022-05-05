@@ -2,6 +2,7 @@ package com.dga.springboot.m13garciadavid.models.service;
 
 import com.dga.springboot.m13garciadavid.models.entity.Cliente;
 import com.dga.springboot.m13garciadavid.models.entity.Factura;
+import com.dga.springboot.m13garciadavid.models.entity.Informe;
 import com.dga.springboot.m13garciadavid.models.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,5 +48,7 @@ public interface IClienteService {
     public Cliente fetchByIdWithFacturas(Long id);
 
     public void borraInforme(Long id);
+
+    public Informe fetchByIdWithCliente(Long id);
 
 }

@@ -3,8 +3,10 @@ package com.dga.springboot.m13garciadavid.models.service;
 import com.dga.springboot.m13garciadavid.models.dao.IClienteDao;
 import com.dga.springboot.m13garciadavid.models.dao.IFacturaDao;
 import com.dga.springboot.m13garciadavid.models.dao.IProductoDao;
+import com.dga.springboot.m13garciadavid.models.dao.I_InformeDao;
 import com.dga.springboot.m13garciadavid.models.entity.Cliente;
 import com.dga.springboot.m13garciadavid.models.entity.Factura;
+import com.dga.springboot.m13garciadavid.models.entity.Informe;
 import com.dga.springboot.m13garciadavid.models.entity.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +34,9 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Autowired
     private IFacturaDao facturaDao;
+
+    @Autowired
+    private I_InformeDao informeDao;
 
     @Transactional(readOnly=true)
     @Override
@@ -112,4 +117,9 @@ public class ClienteServiceImpl implements IClienteService {
         clienteDao.setInformeVoid(id);
     }
 
+    @Transactional
+    @Override
+    public Informe fetchByIdWithCliente(Long id) {
+       return informeDao.fetchByIdWithCliente(id);
+    }
 }
