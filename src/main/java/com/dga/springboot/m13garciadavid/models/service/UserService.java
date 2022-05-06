@@ -1,6 +1,9 @@
 package com.dga.springboot.m13garciadavid.models.service;
 
 import com.dga.springboot.m13garciadavid.models.entity.Usuario;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +12,18 @@ import java.sql.SQLException;
 
 public class UserService {
 
+    //Registrar password encoder i defecte el bcrypt. Retorna la instància i la desa al contenidor @Bean
+    @Bean
+    public static BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     public static int getIDClient(String username) {
         Connection connection = ConexionBBDD.obreConnexioBBDD();
         String query = "SELECT cliente_num FROM user WHERE username = ?";
         PreparedStatement prepStmt = null;
         try {
-            prepStmt= connection.prepareStatement(query);
+            prepStmt = connection.prepareStatement(query);
 
             prepStmt.setString(1, username);
 
@@ -38,29 +47,31 @@ public class UserService {
         return 0;
     }
 
+    
     public static void insertaUsuario(Usuario usuario) throws SQLException {
         Connection connection = ConexionBBDD.obreConnexioBBDD();
-            String username = usuario.getUsername();
-            String password = usuario.getPassword();
-            boolean enabled = true;
-            Long id_cliente = usuario.getCliente_num();
+        PasswordEncoder encoder = passwordEncoder();
+        String username = usuario.getUsername();
+        String password = passwordEncoder().encode(usuario.getPassword());
+        boolean enabled = true;
+        Long id_cliente = usuario.getCliente_num();
 
-            String query = "INSERT INTO user (cliente_num, enabled, password, username) VALUES (?,?,?,?);";
+        String query = "INSERT INTO user (cliente_num, enabled, password, username) VALUES (?,?,?,?);";
 
-            PreparedStatement prepStmt = connection.prepareStatement(query);
-            try {
-                prepStmt.setBoolean(1, enabled);
-                prepStmt.setLong(2, id_cliente);
-                prepStmt.setString(3, password);
-                prepStmt.setString(4, username);
-                prepStmt.executeUpdate();
+        PreparedStatement prepStmt = connection.prepareStatement(query);
+        try {
+            prepStmt.setBoolean(1, enabled);
+            prepStmt.setLong(2, id_cliente);
+            prepStmt.setString(3, password);
+            prepStmt.setString(4, username);
+            prepStmt.executeUpdate();
 
-            } catch (SQLException ex) {
-                System.out.println("Error " + ex.getMessage());
-            } finally {
-                prepStmt.close();
-                ConexionBBDD.tancaConnexioBBDD(connection);
-            }
+        } catch (SQLException ex) {
+            System.out.println("Error " + ex.getMessage());
+        } finally {
+            prepStmt.close();
+            ConexionBBDD.tancaConnexioBBDD(connection);
+        }
     }
 
     public static Long selectUserId(Usuario usuario) {
@@ -68,7 +79,7 @@ public class UserService {
         String query = "SELECT id FROM user WHERE username = ?";
         PreparedStatement prepStmt = null;
         try {
-            prepStmt= connection.prepareStatement(query);
+            prepStmt = connection.prepareStatement(query);
 
             prepStmt.setString(1, usuario.getUsername());
 
@@ -118,7 +129,6 @@ public class UserService {
             ConexionBBDD.tancaConnexioBBDD(connection);
         }
     }
-
 
 
 }
