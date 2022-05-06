@@ -1,5 +1,7 @@
 package com.dga.springboot.m13garciadavid.models.service;
 
+import com.dga.springboot.m13garciadavid.models.entity.Usuario;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,12 +38,30 @@ public class UserService {
         return 0;
     }
 
-    public static boolean insertaUsuario(String username, String password, int id_cliente) {
+    public static boolean insertaUsuario(Usuario usuario) throws SQLException {
+        Connection connection = ConexionBBDD.obreConnexioBBDD();
+            String username = usuario.getUsername();
+            String password = usuario.getPassword();
+            boolean enabled = true;
+            int id_cliente = usuario.getId_cliente();
 
+            String query = "INSERT INTO user (enabled, id_cliente, password, username) VALUES (?,?,?,?);";
 
-
-
-        return false;
+            PreparedStatement prepStmt = connection.prepareStatement(query);
+            try {
+                prepStmt.setBoolean(1, enabled);
+                prepStmt.setInt(2, id_cliente);
+                prepStmt.setString(3, password);
+                prepStmt.setString(4, username);
+                prepStmt.executeUpdate();
+                return true;
+            } catch (SQLException ex) {
+                System.out.println("Error " + ex.getMessage());
+                return false;
+            } finally {
+                prepStmt.close();
+                ConexionBBDD.tancaConnexioBBDD(connection);
+            }
     }
 
 }
