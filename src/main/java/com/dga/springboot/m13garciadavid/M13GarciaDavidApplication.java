@@ -28,13 +28,13 @@ public class M13GarciaDavidApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        //Generem dues contrasenyes encriptades. Una per l'usuari admin i altre per l'usuari David
-        String password = "12345";
+        //Mètode auxiliar que permet generar contrasenyes encriptades si volem afegir users directament a BBDD
+       /* String password = "12345";
 
         for (int i = 0; i < 2; i++) {
             String bcryptPassword = passwordEncoder.encode(password);
             System.out.println(bcryptPassword);
-        }
+        }*/
 
         //Aquests mètodes es poden fer servir per eliminar els arxius pujats cada vegada que iniciem sessió
         //uploadFileService.deleteAll();

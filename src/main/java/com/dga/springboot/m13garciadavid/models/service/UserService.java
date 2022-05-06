@@ -12,7 +12,6 @@ import java.sql.SQLException;
 
 public class UserService {
 
-    //Registrar password encoder i defecte el bcrypt. Retorna la instància i la desa al contenidor @Bean
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -30,8 +29,8 @@ public class UserService {
             ResultSet resultat = prepStmt.executeQuery();
 
             if (resultat.next()) {
-                int id_cliente = resultat.getInt("id_cliente");
-                return id_cliente;
+                int cliente_num = resultat.getInt("cliente_num");
+                return cliente_num;
             }
 
         } catch (SQLException e) {
@@ -47,12 +46,15 @@ public class UserService {
         return 0;
     }
 
-    
+
     public static void insertaUsuario(Usuario usuario) throws SQLException {
         Connection connection = ConexionBBDD.obreConnexioBBDD();
-        PasswordEncoder encoder = passwordEncoder();
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
         String username = usuario.getUsername();
-        String password = passwordEncoder().encode(usuario.getPassword());
+        String password = passwordEncoder.encode((usuario.getPassword()));
         boolean enabled = true;
         Long id_cliente = usuario.getCliente_num();
 
@@ -60,8 +62,8 @@ public class UserService {
 
         PreparedStatement prepStmt = connection.prepareStatement(query);
         try {
-            prepStmt.setBoolean(1, enabled);
-            prepStmt.setLong(2, id_cliente);
+            prepStmt.setLong(1, id_cliente);
+            prepStmt.setBoolean(2, enabled);
             prepStmt.setString(3, password);
             prepStmt.setString(4, username);
             prepStmt.executeUpdate();

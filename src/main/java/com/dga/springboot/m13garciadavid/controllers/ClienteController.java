@@ -352,8 +352,8 @@ public class ClienteController {
 
         //Forma nueva
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        int id_cliente = UserService.getIDClient(auth.getName());
-        Cliente cliente = clienteService.findOne((long) id_cliente);
+        int cliente_num = UserService.getIDClient(auth.getName());
+        Cliente cliente = clienteService.findOne((long) cliente_num);
 
         if (cliente == null) {
             flash.addFlashAttribute("error", messageSource.getMessage("texto.cliente.flash.db.error ", null, locale));
@@ -366,7 +366,7 @@ public class ClienteController {
             model.put("cliente", cliente);
         }
         else {
-            return "redirect:/cliente/ver/".concat(String.valueOf(id_cliente));
+            return "redirect:/cliente/ver/".concat(String.valueOf(cliente_num));
         }
         model.put("titulo", messageSource.getMessage("texto.cliente.detalle.titulo", null, locale) + ": " + cliente.getNombre());
         return "verCliente";

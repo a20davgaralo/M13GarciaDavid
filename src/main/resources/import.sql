@@ -83,6 +83,6 @@ INSERT INTO user (cliente_num, enabled, password, username) VALUES ('Toni', '$2a
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 1), ('ROLE_ADMIN', 2);
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 3);
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 4);
-INSERT INTO a20davgaralo_M13Test.authoritie (authority, user_id) VALUES ('ROLE_ADMIN', 1);
+INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_ADMIN', 1);
 
 DELETE FROM authoritie where id = 3;
