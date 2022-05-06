@@ -26,8 +26,9 @@ public class Usuario implements Serializable {
     private Boolean enabled;
 
     /*@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Cliente id_cliente;*/
+    @JoinColumn(name = "id")*/
+
+    private int id_cliente;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -73,7 +74,20 @@ public class Usuario implements Serializable {
         this.roles = roles;
     }
 
-    /*public Cliente getId_cliente() {
+    public int getId_cliente() {
         return id_cliente;
-    }*/
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", id_cliente=" + id_cliente +
+                '}';
+    }
 }

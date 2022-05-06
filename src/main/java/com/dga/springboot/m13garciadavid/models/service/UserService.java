@@ -36,4 +36,12 @@ public class UserService {
         return 0;
     }
 
+    public static boolean insertaUsuario(String username, String password, int id_cliente) {
+
+
+
+
+        return false;
+    }
+
 }
