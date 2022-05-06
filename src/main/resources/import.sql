@@ -75,13 +75,14 @@ INSERT INTO cliente (apellido, email, identificacion_fiscal, informe, nombre, te
 
 
 /* Entrada en la tabla users con las contraseñas encriptadas por Bcrypt */
-INSERT INTO user (username, password, enabled, id_cliente) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 1);
-INSERT INTO user (username, password, enabled, id_cliente) VALUES('admin', '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 1, null);
-INSERT INTO user (username, password, enabled, id_cliente) VALUES ('Aeris', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 2);
-INSERT INTO user (username, password, enabled, id_cliente) VALUES ('Toni', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 11);
+INSERT INTO user (cliente_num, enabled, password, username) VALUES('David', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 1);
+INSERT INTO user (cliente_num, enabled, password, username) VALUES(null, true, '$2a$10$uXFKXsL.sdwYNXkERYsQ2OyzwuaNLoI.CUpUCfMGa1JUHoRP06Vpu', 'admin');
+INSERT INTO user (cliente_num, enabled, password, username) VALUES ('Aeris', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 2);
+INSERT INTO user (cliente_num, enabled, password, username) VALUES ('Toni', '$2a$10$6HcZ6WEhkEC9Q4lTYP6TP.KCVz0TXpnm9V2c8.sWamNUa8.Fmse/m', 1, 11);
 
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 1), ('ROLE_ADMIN', 2);
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 3);
 INSERT INTO authoritie (authority, user_id) VALUES ('ROLE_USER', 4);
+INSERT INTO a20davgaralo_M13Test.authoritie (authority, user_id) VALUES ('ROLE_ADMIN', 1);
 
 DELETE FROM authoritie where id = 3;

@@ -17,7 +17,7 @@ import java.util.Properties;
 public class ConexionBBDD {
 
     //CONSTANTS PER DEFINIR LA CONNEXIÓ A LA BBDD
-    private static final String URL = "jdbc:mysql://labs.inspedralbes.cat/a20davgaralo_projecteM13?useSSL=false";
+    private static final String URL = "jdbc:mysql://labs.inspedralbes.cat/a20davgaralo_M13Test?useSSL=false";
 
     private static final String USUARI = "a20davgaralo_us";
 
