@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <form method="post" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label" th:text="#{texto.usuario.username}">Username</label>
+                    <div class="col-sm-6">
+                        <input type="text"  class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label" th:text="#{texto.usuario.contrasenya}">Password</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control"/>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label" th:text="#{texto.usuario.idCliente}">Id Cliente</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control"/>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <input type="submit" th:value="${titulo}" class="btn btn-primary"/>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+</div>
+</body>
+</html>
