@@ -282,11 +282,6 @@ public class ClienteController {
             clienteService.eliminar(id);
             flash.addFlashAttribute("success", messageSource.getMessage("texto.cliente.flash.eliminar.success", null, locale));
 
-
-            /*if (uploadFileService.delete(cliente.getInforme())) {
-                String mensajeInformeEliminar = String.format(messageSource.getMessage("texto.cliente.flash.informe.eliminar.success", null, locale), cliente.getInforme());
-                flash.addFlashAttribute("info", mensajeInformeEliminar);
-            }*/
         }
         return "redirect:/listar";
     }
