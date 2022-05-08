@@ -45,7 +45,7 @@ public class Cliente implements Serializable {
     private List<Factura> facturas;
 
     /*@OneToOne(mappedBy = "id_cliente")
-    private Usuario usuario;*/
+    private List<Usuario> usuarios;*/
 
     public Cliente() {
         facturas = new ArrayList<>();
