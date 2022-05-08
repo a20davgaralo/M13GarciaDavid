@@ -59,6 +59,7 @@ public class ClienteController {
 
     /**
      * Gestió de la pujada d'arxius
+     *
      * @param filename
      * @return
      */
@@ -235,7 +236,7 @@ public class ClienteController {
         if (!informe.isEmpty()) {
 
             if (cliente.getId() != null && cliente.getId() > 0 && cliente.getInforme() != null
-                    && cliente.getInforme().length() > 0) {
+                    && cliente.getInforme().length() > 1) {
 
                 uploadFileService.delete(cliente.getInforme());
             }
@@ -261,6 +262,7 @@ public class ClienteController {
 
     /**
      * Eliminació d'un client
+     *
      * @param id
      * @param flash
      * @return
@@ -270,19 +272,28 @@ public class ClienteController {
     public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash, Locale locale) {
         if (id > 0) {
             Cliente cliente = clienteService.findOne(id);
-            clienteService.eliminar(id);
-            flash.addFlashAttribute("success", messageSource.getMessage("texto.cliente.flash.eliminar.success", null, locale));
 
-            if (uploadFileService.delete(cliente.getInforme())) {
+            if (cliente.getInforme() != null) {
+                uploadFileService.delete(cliente.getInforme());
                 String mensajeInformeEliminar = String.format(messageSource.getMessage("texto.cliente.flash.informe.eliminar.success", null, locale), cliente.getInforme());
                 flash.addFlashAttribute("info", mensajeInformeEliminar);
             }
+
+            clienteService.eliminar(id);
+            flash.addFlashAttribute("success", messageSource.getMessage("texto.cliente.flash.eliminar.success", null, locale));
+
+
+            /*if (uploadFileService.delete(cliente.getInforme())) {
+                String mensajeInformeEliminar = String.format(messageSource.getMessage("texto.cliente.flash.informe.eliminar.success", null, locale), cliente.getInforme());
+                flash.addFlashAttribute("info", mensajeInformeEliminar);
+            }*/
         }
         return "redirect:/listar";
     }
 
     /**
      * Eliminar un informe en pdf pujat per un client
+     *
      * @param id
      * @param flash
      * @return
@@ -332,7 +343,7 @@ public class ClienteController {
 
         logger.info("Cliente obtenido número " + UserService.getIDClient(auth.getName()));
 
-        Cliente cliente = clienteService.findOne((long)UserService.getIDClient(auth.getName()));
+        Cliente cliente = clienteService.findOne((long) UserService.getIDClient(auth.getName()));
 
         model.addAttribute("clientes", cliente);
         return "cliente";
@@ -361,11 +372,10 @@ public class ClienteController {
         }
 
         logger.info("Cliente obtenido número " + UserService.getIDClient(auth.getName()));
-        if(cliente.getId() == id) {
+        if (cliente.getId() == id) {
             logger.info("Id de client agafada " + cliente.getId());
             model.put("cliente", cliente);
-        }
-        else {
+        } else {
             return "redirect:/cliente/ver/".concat(String.valueOf(cliente_num));
         }
         model.put("titulo", messageSource.getMessage("texto.cliente.detalle.titulo", null, locale) + ": " + cliente.getNombre());
@@ -374,6 +384,7 @@ public class ClienteController {
 
     /**
      * Comproba si un rol passat per paràmetre està a la taula de rols
+     *
      * @param role
      * @return true si el rol està a la col·leció o fals si no ho està
      */

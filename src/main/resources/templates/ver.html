@@ -52,7 +52,7 @@
                     </tbody>
 				</table>
 
-				<div th:if="${cliente.informe == null || #strings.length(cliente.informe) < 1}" class="alert alert-info my-4" th:text="#{texto.cliente.detalle.no.informe} + ' ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></div>
+				<div th:if="${cliente.informe == null || #strings.length(cliente.informe) <= 1}" class="alert alert-info my-4" th:text="#{texto.cliente.detalle.no.informe} + ' ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></div>
 
 				<table th:if="${cliente.informe != null && #strings.length(cliente.informe) > 1}" class="table table-bordered table-striped my-4">
 					<thead class="thead-dark">
