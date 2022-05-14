@@ -7,6 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+/**
+ * Author: David García Alonso
+ *  Versió: 1.0
+ *  Interfície que determina els mètodes que ha d'implementar la classe que la implementi
+ *  Gestiona les accions que podem fer amb els arxius que pujem al nostre client
+ */
 public interface IUploadFileService {
 
     public Resource load(String filename) throws MalformedURLException;

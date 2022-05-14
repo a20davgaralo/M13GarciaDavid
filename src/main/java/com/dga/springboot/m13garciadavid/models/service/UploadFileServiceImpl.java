@@ -16,6 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Author: David García Alonso
+ *  Versió: 1.0
+ *  Classe service que desenvolupa els mètodes que defineix l'interfície IUploadFileService
+ */
 @Service
 public class UploadFileServiceImpl implements IUploadFileService {
 
@@ -73,7 +78,6 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
     @Override
     public void init() throws IOException {
-        // TODO Auto-generated method stub
         Files.createDirectory(Paths.get(UPLOADS_FOLDER));
     }
 }

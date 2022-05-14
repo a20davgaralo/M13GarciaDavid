@@ -10,6 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ *  Author: David García Alonso
+ *  Versió: 1.0
+ *  Classe que gestiona diferents actuacions amb els usuaris de l'aplicació
+ */
 public class UserService {
 
     @Bean
@@ -17,6 +22,11 @@ public class UserService {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Mètode que obtè el camp cliente_num d'un usuari amb "ROLE_USER"
+     * @param username nom d'usuari de la taula users
+     * @return
+     */
     public static int getIDClient(String username) {
         Connection connection = ConexionBBDD.obreConnexioBBDD();
         String query = "SELECT cliente_num FROM user WHERE username = ?";
@@ -47,6 +57,11 @@ public class UserService {
     }
 
 
+    /**
+     * Mètode que inserta un usuari a la taula user
+     * @param usuario Objecte de la classe Usuario
+     * @throws SQLException
+     */
     public static void insertaUsuario(Usuario usuario) throws SQLException {
         Connection connection = ConexionBBDD.obreConnexioBBDD();
 
@@ -76,6 +91,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Mètode que obté l'id de l'usuari emmagatzemat a la BBDD
+     * @param usuario Objecte de la classe Usuario
+     * @return id de l'usuari a la BBDD. De tipus Long
+     */
     public static Long selectUserId(Usuario usuario) {
         Connection connection = ConexionBBDD.obreConnexioBBDD();
         String query = "SELECT id FROM user WHERE username = ?";
@@ -105,6 +125,11 @@ public class UserService {
         return null;
     }
 
+    /**
+     * Mètode que inserta els camps a la taula authoritie després de donar d'alta un usuari
+     * @param usuario Objecte de la classe Usuario
+     * @throws SQLException
+     */
     public static void insertaAuth(Usuario usuario) throws SQLException {
         Connection connection = ConexionBBDD.obreConnexioBBDD();
         Long user_id = UserService.selectUserId(usuario);

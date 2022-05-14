@@ -3,6 +3,11 @@ package com.dga.springboot.m13garciadavid.validation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe que defineix els paràmetres per validar el identificador fiscal
+ */
 public class IDFiscalRegexValidador implements ConstraintValidator<IDFiscalRegex, String> {
 
     private final String REGEX_CIF = "([ABCDEFGHJKLMNPQRSUVW])(\\d{7})([0-9A-J])";

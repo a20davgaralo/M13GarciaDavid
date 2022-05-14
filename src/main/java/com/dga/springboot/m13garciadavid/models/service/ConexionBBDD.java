@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * Author: David García Alonso
  * Versió: 1.0
- * Classe per gestionar una connexió amb una BBDD. També ens permet fer una consulta per obtenir el id_client d'un usuari determinat
+ * Classe per gestionar una connexió amb una BBDD.
  */
 public class ConexionBBDD {
 

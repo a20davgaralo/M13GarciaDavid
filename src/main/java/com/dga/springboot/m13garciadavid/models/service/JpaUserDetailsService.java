@@ -18,7 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Author: David García Alonso
+ * Versió: 1.0
+ * Classe service per gestionar l'identificació de l'usuari a través de l'interfície IUsuarioDao
+ */
 @Service("jpaUserDetailsService")
 public class JpaUserDetailsService implements UserDetailsService {
 
@@ -27,6 +31,12 @@ public class JpaUserDetailsService implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(JpaUserDetailsService.class);
 
+    /**
+     * Mètode que busca un usuari pel seu nom d'usuari, si el troba, retorna les seves dades
+     * @param username nom d'usuari buscat
+     * @return els detalls de l'usuari que ha trobat (Nom d'usuari, password i si està actiu
+     * @throws UsernameNotFoundException
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,10 +62,5 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
     }
-
-    /*public Long getIdClientUser(String username) {
-        Usuario usuario = usuarioDao.findByUsername(username);
-        return usuario.getId_cliente().getId();
-    }*/
 
 }
