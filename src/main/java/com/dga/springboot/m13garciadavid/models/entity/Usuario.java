@@ -31,7 +31,7 @@ public class Usuario implements Serializable {
     @Column(nullable = true)
     private Long cliente_num;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private List<Role> roles;
 

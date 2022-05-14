@@ -30,13 +30,24 @@ create table authoritie
 
 # Afegim una clau forànea a la taula user per identificar a un client amb aquest usuari
 ALTER TABLE
-    user
-ADD COLUMN
-    id_cliente BIGINT(20),
+    a20davgaralo_projecteM13.user
 ADD FOREIGN KEY
-    user (id_cliente) REFERENCES cliente (id)
+    user (cliente_num) REFERENCES cliente (id)
 ON DELETE CASCADE ON UPDATE CASCADE;
 
+ALTER TABLE `a20davgaralo_projecteM13`.`authoritie`
+    DROP FOREIGN KEY `FKrsvghc1cfpns54pmc3c3ck3b2`;
+ALTER TABLE `a20davgaralo_projecteM13`.`authoritie`
+    ADD CONSTRAINT `FKrsvghc1cfpns54pmc3c3ck3b2`
+        FOREIGN KEY (`user_id`)
+            REFERENCES `a20davgaralo_projecteM13`.`user` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+
+
+
 DESCRIBE cliente;
+
 
 
