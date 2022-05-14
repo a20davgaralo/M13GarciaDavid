@@ -1,0 +1,9 @@
+com.dga.springboot.m13garciadavid
+com.dga.springboot.m13garciadavid.auth.handler
+com.dga.springboot.m13garciadavid.controllers
+com.dga.springboot.m13garciadavid.models.dao
+com.dga.springboot.m13garciadavid.models.entity
+com.dga.springboot.m13garciadavid.models.service
+com.dga.springboot.m13garciadavid.util.paginator
+com.dga.springboot.m13garciadavid.validation
+com.dga.springboot.m13garciadavid.view.pdf
