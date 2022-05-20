@@ -1,5 +1,9 @@
 # Abril det-ERP-ctives
 
+## Autor
+
+_David García Alonso_
+
 ## Projecte final de grau Desenvolupament d'aplicacions multiplataforma
 
 Repositori públic que conté el codi font del projecte final realitzat a l'[Institut Pedralbes](https://www.institutpedralbes.cat/) el maig del 2022.
@@ -39,3 +43,11 @@ Aquesta plataforma ens ofereix la possibilitat de tenir un control de versions i
 un desplegament del nostre projecte exportat a un arxiu executable de tipus JAR.
 
 [Enllaç a l'aplicació desplegada](http://m13dam2022dga.herokuapp.com/)
+
+### Tecnologies
+
+[Spring Framework](https://spring.io/)
+[MySQL] (https://www.mysql.com/)
+[Git](https://git-scm.com/)
+
+
