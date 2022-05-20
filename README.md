@@ -30,3 +30,12 @@ ERP, detectius, Spring, Java, MySQL, clients, facturació.
 La documentació del codi s'ha fet amb l'eina JavaDoc.
 
 Fent servir Github Pages, hem creat [una pàgina](https://a20davgaralo.github.io/M13GarciaDavid/) des d'on podem accedir a aquesta.
+
+### Desplegament
+
+Per tal de desplegar l’aplicació a un servidor i poder accedir a ella des de qualsevol
+navegador web, hem fet servir la plataforma Heroku: Cloud Application Plataform.
+Aquesta plataforma ens ofereix la possibilitat de tenir un control de versions i poder fer
+un desplegament del nostre projecte exportat a un arxiu executable de tipus JAR.
+
+[Enllaç a l'aplicació desplegada](http://m13dam2022dga.herokuapp.com/)
