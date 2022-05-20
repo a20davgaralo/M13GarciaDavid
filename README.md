@@ -27,4 +27,6 @@ ERP, detectius, Spring, Java, MySQL, clients, facturació.
 
 ### Documentació
 
+La documentació del codi s'ha fet amb l'eina JavaDoc.
 
+Fent servir Github Pages, hem creat [una pàgina](https://a20davgaralo.github.io/M13GarciaDavid/) des d'on podem accedir a aquesta.
