@@ -46,8 +46,8 @@ un desplegament del nostre projecte exportat a un arxiu executable de tipus JAR.
 
 ### Tecnologies
 
-[Spring Framework](https://spring.io/)
-[MySQL](https://www.mysql.com/)
+[Spring Framework](https://spring.io/)  
+[MySQL](https://www.mysql.com/)  
 [Git](https://git-scm.com/)
 
 
